@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.cec.superhero.dao.SuperHeroDaoDbImplTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 25.017 s - in com.cec.superhero.dao.SuperHeroDaoDbImplTest
