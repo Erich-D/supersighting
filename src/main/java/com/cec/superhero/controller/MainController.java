@@ -15,6 +15,7 @@ import com.cec.superhero.repositories.SightingRepository;
 import com.cec.superhero.repositories.SuperRepository;
 import javax.servlet.http.HttpServletRequest;
 import com.cec.superhero.models.Super;
+import com.cec.superhero.models.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,8 @@ public class MainController {
        //number = (number > supers.count()) ? (int)supers.count():number;
        Super sup = (Super)dao.findById(Models.SUPERS,number);
        System.out.println(dao.getLocsWhereSuperSeen(sup).toString());
+       Location loc = (Location)dao.findById(Models.LOCATIONS, 2);
+       System.out.println(dao.getSupersSeenAtLoc(loc).toString());
        model.addAttribute("super", sup);
        model.addAttribute("firstName", name);
 

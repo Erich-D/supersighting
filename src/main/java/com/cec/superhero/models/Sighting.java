@@ -6,8 +6,10 @@
 package com.cec.superhero.models;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,15 +29,17 @@ public class Sighting {
     private int id;
     @Column(nullable = false)
     private LocalDateTime date;
+    /*
     @Column(name = "location_id", insertable = false, updatable = false)
     private int locationId;
     @Column(name = "super_id", insertable = false, updatable = false) 
     private int superId;
-    @ManyToOne
-    @JoinColumn(name = "location_id", nullable = false)
+    */
+    @ManyToOne//(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
     private Location location;
-    @ManyToOne
-    @JoinColumn(name = "super_id", nullable = false)
+    @ManyToOne//(fetch = FetchType.LAZY)
+    @JoinColumn(name = "super_id")
     private Super superp;
 
     public int getId() {
@@ -69,6 +73,48 @@ public class Sighting {
     public void setSuperp(Super superp) {
         this.superp = superp;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Sighting{" + "id=" + id + ", date=" + date + ", location=" + location + ", superp=" + superp + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.date);
+        hash = 67 * hash + Objects.hashCode(this.location);
+        hash = 67 * hash + Objects.hashCode(this.superp);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sighting other = (Sighting) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.date, other.date)) {
+            return false;
+        }
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        if (!Objects.equals(this.superp, other.superp)) {
+            return false;
+        }
+        return true;
+    }
+
     
 }

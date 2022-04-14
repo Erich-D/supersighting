@@ -20,6 +20,6 @@ import org.springframework.stereotype.Repository;
 public interface SightingRepository extends JpaRepository<Sighting, Integer>{
     List<Sighting> findByLocationId(int id);
     //@Query("select s from sightings s where s.super_id = ?1")
-    List<Sighting> findBySuperId(int id);
+    //List<Sighting> findBySuperId(int id);
     List<Sighting> findByDate(LocalDateTime date);
 }

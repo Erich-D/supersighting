@@ -8,6 +8,7 @@ package com.cec.superhero.dao;
 import com.cec.superhero.dao.SuperHeroDaoDbImpl.Models;
 import com.cec.superhero.models.Location;
 import com.cec.superhero.models.Organization;
+import com.cec.superhero.models.Power;
 import com.cec.superhero.models.Sighting;
 import com.cec.superhero.models.Super;
 import java.time.LocalDateTime;
@@ -32,4 +33,12 @@ public interface SuperHeroDao {
     Boolean deleteById(Models type, int id);
     //checks if object exists
     Boolean existsById(Models type, int id);
+    //finds all objects of type
+    List<Location> findAllLocs();
+    List<Organization> findAllOrgs();
+    List<Power> findAllPow();
+    List<Sighting> findAllSight();
+    List<Super> findAllSups();
+    //gets object count
+    long count(Models type);
 }

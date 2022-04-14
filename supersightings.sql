@@ -113,9 +113,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `supersightings`.`Sightings` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `location_id` INT NOT NULL,
-  `super_id` INT NOT NULL,
+  `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `location_id` INT,
+  `super_id` INT,
   PRIMARY KEY (`id`),
   INDEX `location_id_idx` (`location_id` ASC) VISIBLE,
   INDEX `super_idx` (`super_id` ASC) VISIBLE,

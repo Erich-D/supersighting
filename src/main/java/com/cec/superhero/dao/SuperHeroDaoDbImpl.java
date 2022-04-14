@@ -18,6 +18,7 @@ import com.cec.superhero.repositories.SuperRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,36 +42,46 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
     public enum Models {SUPERS,POWERS,ORGANIZATIONS,LOCATIONS,SIGHTINGS}
     
     @Override
+    @Transactional
     public List<Super> getSupersSeenAtLoc(Location loc) {
+        loc = location.findById(loc.getId()).orElse(null);
         List<Sighting> sites = sighting.findByLocationId(loc.getId());
         return sites.stream().map(s -> s.getSuperp()).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public List<Location> getLocsWhereSuperSeen(Super sup) {
-        List<Sighting> sites = sighting.findBySuperId(sup.getId());
+        sup = supers.findById(sup.getId()).orElse(null);
+        List<Sighting> sites = sup.getSightings();
         return sites.stream().map(s -> s.getLocation()).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public List<Sighting> getSightingsByDate(LocalDateTime date) {
         return sighting.findByDate(date);
     }
 
     @Override
+    @Transactional
     public List<Super> getMembersOfOrg(String name) {
         List<Organization> orgs = organ.findByName(name);
         return orgs.stream().flatMap(o -> o.getSupers().stream()).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public List<Organization> getSuperBelongsTo(String name) {
         List<Super> sups = supers.findByName(name);
         return sups.stream().flatMap(s -> s.getOrganizations().stream()).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public Sighting reportNewSighting(Location loc, Super sup) {
+        loc = location.save(loc);
+        sup = supers.save(sup);
         Sighting newSight = new Sighting();
         newSight.setLocation(loc);
         newSight.setSuperp(sup);
@@ -113,6 +124,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
      * @return
      */
     @Override
+    @Transactional
     public Object saveOrUpdate(Models type, Object ob) {
         switch(type){
             case SUPERS:
@@ -131,6 +143,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
     }
 
     @Override
+    @Transactional
     public Boolean deleteById(Models type, int id) {
         switch(type){
             case SUPERS:
@@ -171,5 +184,50 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
                 return false;
         }
     }
+
+   
+    @Override
+    public long count(Models type) {
+        switch(type){
+            case SUPERS:
+                return supers.count();
+            case POWERS:
+                return power.count();
+            case ORGANIZATIONS:
+                return organ.count();
+            case SIGHTINGS:
+                return sighting.count();
+            case LOCATIONS:
+                return location.count();
+            default:
+                return 0;
+        }
+    }
+
+    @Override
+    public List<Location> findAllLocs() {
+        return location.findAll();
+    }
+
+    @Override
+    public List<Organization> findAllOrgs() {
+        return organ.findAll();
+    }
+
+    @Override
+    public List<Power> findAllPow() {
+        return power.findAll();
+    }
+
+    @Override
+    public List<Sighting> findAllSight() {
+        return sighting.findAll();
+    }
+
+    @Override
+    public List<Super> findAllSups() {
+        return supers.findAll();
+    }
+    
     
 }

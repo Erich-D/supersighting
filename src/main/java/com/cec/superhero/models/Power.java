@@ -5,7 +5,9 @@
  */
 package com.cec.superhero.models;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +31,17 @@ public class Power {
     @Column(nullable = false)
     private String descr;
     @ManyToMany(mappedBy = "powers")
-    private List<Super> supers;
+    private List<Super> supers = new ArrayList<Super>();
+    
+    public void addSuper(Super sup){
+        this.supers.add(sup);
+        sup.getPowers().add(this);
+    }
+    
+    public void removeSuper(Super sup){
+        this.supers.remove(sup);
+        sup.getPowers().remove(this);
+    }
 
     public int getId() {
         return id;
@@ -53,6 +65,44 @@ public class Power {
 
     public void setDescr(String descr) {
         this.descr = descr;
+    }
+
+    @Override
+    public String toString() {
+        return "Power{" + "id=" + id + ", name=" + name + ", descr=" + descr + ", supers=" + supers + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 13 * hash + this.id;
+        hash = 13 * hash + Objects.hashCode(this.name);
+        hash = 13 * hash + Objects.hashCode(this.descr);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Power other = (Power) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.descr, other.descr)) {
+            return false;
+        }
+        return true;
     }
     
     
