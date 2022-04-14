@@ -4,6 +4,7 @@ com\cec\superhero\repositories\SightingRepository.class
 com\cec\superhero\SuperheroApplication.class
 com\cec\superhero\repositories\OrganizationRepository.class
 com\cec\superhero\models\Location.class
+com\cec\superhero\controller\MainController$Field.class
 com\cec\superhero\models\Sighting.class
 com\cec\superhero\dao\SuperHeroDaoDbImpl$Models.class
 com\cec\superhero\controller\MainController.class

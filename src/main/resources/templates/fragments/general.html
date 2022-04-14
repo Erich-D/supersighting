@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+<meta charset="UTF-8" />
+<link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- header fragments -->
+    <div th:fragment="header">
+        <div class="row m-4">
+            <div class="col text-center border border-dark">
+                <h1>Superhero Sightings</h1>
+            </div>
+        </div>
+    </div>
+    <!-- ticker fragment -->
+    <div th:fragment="ticker">
+        <div class="hwrap">
+            <div class="hmove">
+                <div th:each="sighting : ${sightings}" class="hitem">
+                    <p th:text="${sighting.date}"></p>
+                    <p th:text="${sighting.superp.name}"></p>
+                </div>
+            </div>
+        </div>
+        <script>
+            var width = 0;
+            var tw = $('.hmove').outerWidth();
+            $('.hmove').children().each(function () {
+            width += $(this).outerWidth(true);
+            // change to .outerWidth(true) if you want to calculate margin too.
+            });
+            var tnum = -(width / tw) * 100;
+            var ttime = width / 100;
+            var r = document.querySelector(':root');
+            r.style.setProperty('--ticknum',tnum+'%');
+            r.style.setProperty('--ticktime',ttime+'s');
+            var rw = getComputedStyle(r);
+            //$(":root").attr("style","--ticknum:"+tnum+"%");  //not ifnding dependable jquery method of changing values
+            //$(":root").attr("style","--ticktime:"+ttime+"s");
+            console.log(width);
+            console.log(tw);
+            console.log(ttime);
+            console.log(rw.getPropertyValue('--ticknum'));
+            console.log(rw.getPropertyValue('--ticktime'));
+        </script>
+    </div>
+    <div th:fragment="form">
+        <form>
+            <div th:each='field : ${fields}'>
+                <div th:replace="fragments/general.html
+                     :: formField(field=${field.name}, value=${field.value}, size=${field.size})">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div th:fragment="formField (field, value, size)">
+        <div class="form-group row">
+            <div>
+                <label th:for="${#strings.toLowerCase(field)}"> <span
+                    th:text="${field}">Field</span>
+                </label>
+            </div>
+            <div>
+                <input type="text" th:id="${#strings.toLowerCase(field)}"
+                    th:name="${#strings.toLowerCase(field)}" th:value="${value}"
+                    th:size="${size}">
+            </div>
+        </div>
+    </div>
+    <p>Go to the next page to see fragments in action</p>
+    <aside>
+        <div>This is a sidebar</div>
+    </aside>
+    <div class="another">This is another sidebar</div>
+    
+    <!-- footer fragments -->
+    <footer th:fragment="footer">
+        <a th:href="@{/fragments}">Fragments Index</a> | 
+        <a th:href="@{/markup}">Markup inclussion</a> | 
+        <a th:href="@{/params}">Fragment params</a> | 
+        <a th:href="@{/other}">Other</a>
+    </footer>
+</body>
+</html>

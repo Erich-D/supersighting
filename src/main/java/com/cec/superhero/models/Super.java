@@ -123,12 +123,12 @@ public class Super {
         this.sightings = sightings;
     }
 
-    
     @Override
     public String toString() {
-        return "Super{" + "id=" + id + ", name=" + name + ", descr=" + descr + ", hero=" + hero + ", powers=" + powers + ", organizations=" + organizations + '}';
+        return "Super{" + "id=" + id + ", name=" + name + ", descr=" + descr + ", hero=" + hero + '}';
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 7;
