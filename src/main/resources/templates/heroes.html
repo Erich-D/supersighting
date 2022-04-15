@@ -33,14 +33,14 @@
                     <input class="col-8 form-control" type="text" id="superheroName" name="name"/>
                 </div>
                 <div class="form-group">
-                    <label class="col-4" for="superheroDescr">Location</label>
+                    <label class="col-4" for="superheroDescr">Description</label>
                     <input class="col-8 form-control" type="text" id="superheroDescr" name="descr"/>
                 </div>
                 <div class="form-group">
-                    <label class="col-4" for="superheroPowers">Manager</label>
+                    <label class="col-4" for="superheroPowers">Superpowers</label>
                     <input class="col-8 form-control" type="text" id="superheroPowers" name="powers"/>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Store</button>
+                <button type="submit" class="btn btn-primary">Add Superhero</button>
             </form>
         </div>
         <div>
@@ -70,6 +70,14 @@
                                 </table>
                             </td>
                             <!-- <td th:text="${super.powers}">Superhero Power</td> -->
+                            <td class="data">
+                                <table class="centered">
+                                    <tr th:each="org : ${super.organizations}">
+                                        <td th:text="${org.name}">Superhero Org</td>
+                                    </tr>
+                                    <!-- <tr th:text="${power.name}">Superpower Name</tr> -->
+                                </table>
+                            </td>
                             <td><a href="#" th:href="@{/editSuper(id=${super.id})}">Edit</a></td>
                             <td><a href="#" th:href="@{/deleteSuper(id=${super.id})}">Delete</a></td>
                         </tr>
