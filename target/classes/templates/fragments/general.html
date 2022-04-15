@@ -9,7 +9,27 @@
     <div th:fragment="header">
         <div class="row m-4">
             <div class="col text-center border border-dark">
-                <h1>Superhero Sightings</h1>
+                <h1 th:text='${headerText}'></h1>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar fragment -->
+    <div th:fragment='nav-bar'>
+        <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <a href="supers" class="btn btn-outline-primary btn-lg">Supers</a>
+            </div>
+            <div class="col text-center m-3">
+                <a href="powers" class="btn btn-outline-primary btn-lg">Powers</a>
+            </div>
+            <div class="col text-center m-3">
+                <a href="locals" class="btn btn-outline-primary btn-lg">Locations</a>
+            </div>
+            <div class="col text-center m-3">
+                <a href="organ" class="btn btn-outline-primary btn-lg">Organizations</a>
+            </div>
+            <div class="col text-center m-3">
+                <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
             </div>
         </div>
     </div>
@@ -45,11 +65,17 @@
             console.log(rw.getPropertyValue('--ticktime'));
         </script>
     </div>
+    <!-- form builder fragment -->
     <div th:fragment="form">
         <form>
             <div th:each='field : ${fields}'>
                 <div th:replace="fragments/general.html
+<<<<<<< Updated upstream
                         :: formField(field=${field.name}, value=${field.value}, size=${field.size})">
+=======
+                     :: formField(field=${field.name}
+                     , value=${field.value}, size=${field.size})">
+>>>>>>> Stashed changes
                 </div>
             </div>
         </form>
@@ -68,18 +94,19 @@
             </div>
         </div>
     </div>
-    <p>Go to the next page to see fragments in action</p>
-    <aside>
-        <div>This is a sidebar</div>
-    </aside>
-    <div class="another">This is another sidebar</div>
-    
+    <!-- List fragment -->
+    <div th:fragment="valueList">
+        <div th:each="value : ${list}">
+            <p th:text="${value.name}"></p>
+        </div>
+    </div>
     <!-- footer fragments -->
     <footer th:fragment="footer">
-        <a th:href="@{/fragments}">Fragments Index</a> | 
-        <a th:href="@{/markup}">Markup inclussion</a> | 
-        <a th:href="@{/params}">Fragment params</a> | 
-        <a th:href="@{/other}">Other</a>
+        <a th:href="@{/supers}">Supers</a> | 
+        <a th:href="@{/powers}">Powers</a> | 
+        <a th:href="@{/locations}">Locations</a> | 
+        <a th:href="@{/organizations}">Organizations</a> |
+        <a th:href="@{/sightings}">Sightings</a>
     </footer>
 </body>
 </html>

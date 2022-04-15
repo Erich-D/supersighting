@@ -6,19 +6,18 @@
 package com.cec.superhero.controller;
 
 import com.cec.superhero.dao.SuperHeroDao;
-import com.cec.superhero.dao.SuperHeroDaoDbImpl;
 import com.cec.superhero.dao.SuperHeroDaoDbImpl.Models;
-import com.cec.superhero.repositories.LocationRepository;
-import com.cec.superhero.repositories.OrganizationRepository;
-import com.cec.superhero.repositories.PowerRepository;
-import com.cec.superhero.repositories.SightingRepository;
-import com.cec.superhero.repositories.SuperRepository;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import com.cec.superhero.models.Super;
 import com.cec.superhero.models.Location;
 import com.cec.superhero.models.Sighting;
+import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,62 +30,97 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class MainController {
-    /*
-    @Autowired
-    LocationRepository location;  
-    @Autowired
-    SuperRepository supers;
-    @Autowired
-    SightingRepository sighting;
-    @Autowired
-    PowerRepository power;
-    @Autowired
-    OrganizationRepository organ;
-    */
+    
     @Autowired
     SuperHeroDao dao;
     
-    String name = "John";
-    int number = 2;
+    @GetMapping("/")
+    public String homePage(Model model, HttpSession session) {
+        String head = (false) ? model.getAttribute("test").toString():"Superhero Sightings";
+        List<Sighting> sightings = dao.findAllSight().stream().limit(10)
+                .collect(Collectors.toList());
+        System.out.println(session.getAttribute("test"));
+        //Puts text in header
+        model.addAttribute("headerText", head);
+        //Sightings for the ticker tape
+        model.addAttribute("sightings",sightings);
+        
+        return "home";
+    }
+
+    @GetMapping("supers")
+    public String supersPage(Model model){
+        List<Super> supers = dao.findAllSups();
+        List<java.lang.reflect.Field> fds = Arrays.stream(Super.class.getDeclaredFields())
+                .filter(f -> Modifier.isPublic(f.getModifiers()))
+                .collect(Collectors.toList());
+        model.addAttribute("headerText", "Superheroes and Villians");
+        model.addAttribute("supers",supers);
+        return "heroes";
+    } 
     
-    private class Field{
-        private String name;
-        private String value;
-        private String size;
+    @PostMapping("supers")
+     public String supersForm(HttpServletRequest request) {
+         //name = request.getParameter("formFirstName");
+         //number = Integer.parseInt(request.getParameter("formNumber"));
 
-        public Field(String name, String value, String size) {
-            this.name = name;
-            this.value = value;
-            this.size = size;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getSize() {
-            return size;
-        }
-
-        public void setSize(String size) {
-            this.size = size;
-        }
-        
-        
+         return "redirect:/supers";
+    }
+     
+    @GetMapping("powers")
+    public String powersPage(Model model, HttpSession session){
+        model.addAttribute("test","Hello World");
+        session.setAttribute("test", "Hello World");
+        return "redirect:/?q=powers";
     }
     
+    @PostMapping("powers")
+     public String powersForm(HttpServletRequest request) {
+         //name = request.getParameter("formFirstName");
+         //number = Integer.parseInt(request.getParameter("formNumber"));
+
+         return "redirect:/powers";
+    }
+     
+    @GetMapping("locations")
+    public String locationsPage(Model model){
+        return "home";
+    }
+    
+    @PostMapping("locations")
+     public String locationsForm(HttpServletRequest request) {
+         //name = request.getParameter("formFirstName");
+         //number = Integer.parseInt(request.getParameter("formNumber"));
+
+         return "redirect:/locations";
+    } 
+     
+    @GetMapping("organizations")
+    public String organizationsPage(Model model){
+        return "home";
+    }
+    
+    @PostMapping("organizations")
+     public String organizationsForm(HttpServletRequest request) {
+         //name = request.getParameter("formFirstName");
+         //number = Integer.parseInt(request.getParameter("formNumber"));
+
+         return "redirect:/organizations";
+    }
+     
+    @GetMapping("sightings")
+    public String sightingsPage(Model model){
+        Field date = new Field("Date:",LocalDateTime.now().toString(),"","datetime-local");
+        Field tf1 = new Field("another name","another value","another size","text");
+        List<Field> fields = new ArrayList<Field>();
+        fields.add(date);
+        fields.add(tf1);
+        //model.addAttribute("super", sup);
+        model.addAttribute("fields", fields);
+        return "sightings";
+    }
+    
+<<<<<<< Updated upstream
     @GetMapping("index")
     public String testPage(Model model) {
        //number = (number > supers.count()) ? (int)supers.count():number;
@@ -112,5 +146,13 @@ public class MainController {
         number = Integer.parseInt(request.getParameter("formNumber"));
         
         return "redirect:/test";
+=======
+    @PostMapping("sightings")
+     public String sightingsForm(HttpServletRequest request) {
+         //name = request.getParameter("formFirstName");
+         //number = Integer.parseInt(request.getParameter("formNumber"));
+
+         return "redirect:/sightings";
+>>>>>>> Stashed changes
     }
 }
