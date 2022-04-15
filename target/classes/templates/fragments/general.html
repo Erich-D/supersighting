@@ -49,7 +49,7 @@
         <form>
             <div th:each='field : ${fields}'>
                 <div th:replace="fragments/general.html
-                     :: formField(field=${field.name}, value=${field.value}, size=${field.size})">
+                        :: formField(field=${field.name}, value=${field.value}, size=${field.size})">
                 </div>
             </div>
         </form>
