@@ -17,16 +17,16 @@
     <div th:fragment='nav-bar'>
         <div class="row m-4 border border-dark">
             <div class="col text-center m-3">
-                <a href="supers" class="btn btn-outline-primary btn-lg">Supers</a>
+                <a href="heroes" class="btn btn-outline-primary btn-lg">Supers</a>
             </div>
             <div class="col text-center m-3">
-                <a href="powers" class="btn btn-outline-primary btn-lg">Powers</a>
+                <a href="superpowers" class="btn btn-outline-primary btn-lg">Powers</a>
             </div>
             <div class="col text-center m-3">
-                <a href="locals" class="btn btn-outline-primary btn-lg">Locations</a>
+                <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
             </div>
             <div class="col text-center m-3">
-                <a href="organ" class="btn btn-outline-primary btn-lg">Organizations</a>
+                <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
             </div>
             <div class="col text-center m-3">
                 <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
@@ -70,17 +70,15 @@
         <form>
             <div th:each='field : ${fields}'>
                 <div th:replace="fragments/general.html
-<<<<<<< Updated upstream
-                        :: formField(field=${field.name}, value=${field.value}, size=${field.size})">
-=======
+                        :: formField(field=${field.name}, value=${field.value}, size=${field.size}, type=${field.type})">
+
                      :: formField(field=${field.name}
                      , value=${field.value}, size=${field.size})">
->>>>>>> Stashed changes
                 </div>
             </div>
         </form>
     </div>
-    <div th:fragment="formField (field, value, size)">
+    <div th:fragment="formField (field, value, size, type)">
         <div class="form-group row">
             <div>
                 <label th:for="${#strings.toLowerCase(field)}"> <span
@@ -88,7 +86,7 @@
                 </label>
             </div>
             <div>
-                <input type="text" th:id="${#strings.toLowerCase(field)}"
+                <input th:type="${type}" th:id="${#strings.toLowerCase(field)}"
                     th:name="${#strings.toLowerCase(field)}" th:value="${value}"
                     th:size="${size}">
             </div>

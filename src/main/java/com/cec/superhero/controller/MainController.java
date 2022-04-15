@@ -34,7 +34,7 @@ public class MainController {
     @Autowired
     SuperHeroDao dao;
     
-    @GetMapping("/")
+    @GetMapping("index")
     public String homePage(Model model, HttpSession session) {
         String head = (false) ? model.getAttribute("test").toString():"Superhero Sightings";
         List<Sighting> sightings = dao.findAllSight().stream().limit(10)
@@ -45,11 +45,11 @@ public class MainController {
         //Sightings for the ticker tape
         model.addAttribute("sightings",sightings);
         
-        return "home";
+        return "index";
     }
 
-    @GetMapping("supers")
-    public String supersPage(Model model){
+    @GetMapping("heroes")
+    public String heroesPage(Model model){
         List<Super> supers = dao.findAllSups();
         List<java.lang.reflect.Field> fds = Arrays.stream(Super.class.getDeclaredFields())
                 .filter(f -> Modifier.isPublic(f.getModifiers()))
@@ -59,32 +59,32 @@ public class MainController {
         return "heroes";
     } 
     
-    @PostMapping("supers")
+    @PostMapping("heroes")
      public String supersForm(HttpServletRequest request) {
          //name = request.getParameter("formFirstName");
          //number = Integer.parseInt(request.getParameter("formNumber"));
 
-         return "redirect:/supers";
+         return "redirect:/heroes";
     }
      
-    @GetMapping("powers")
+    @GetMapping("superpowers")
     public String powersPage(Model model, HttpSession session){
         model.addAttribute("test","Hello World");
         session.setAttribute("test", "Hello World");
-        return "redirect:/?q=powers";
+        return "superpowers";
     }
     
-    @PostMapping("powers")
+    @PostMapping("superpowers")
      public String powersForm(HttpServletRequest request) {
          //name = request.getParameter("formFirstName");
          //number = Integer.parseInt(request.getParameter("formNumber"));
 
-         return "redirect:/powers";
+         return "redirect:/superpowers";
     }
      
     @GetMapping("locations")
     public String locationsPage(Model model){
-        return "home";
+        return "locations";
     }
     
     @PostMapping("locations")
@@ -97,7 +97,7 @@ public class MainController {
      
     @GetMapping("organizations")
     public String organizationsPage(Model model){
-        return "home";
+        return "organizations";
     }
     
     @PostMapping("organizations")
@@ -120,39 +120,11 @@ public class MainController {
         return "sightings";
     }
     
-<<<<<<< Updated upstream
-    @GetMapping("index")
-    public String testPage(Model model) {
-       //number = (number > supers.count()) ? (int)supers.count():number;
-        Super sup = (Super)dao.findById(Models.SUPERS,number);
-        System.out.println(dao.getLocsWhereSuperSeen(sup).toString());
-        Location loc = (Location)dao.findById(Models.LOCATIONS, 2);
-        System.out.println(dao.getSupersSeenAtLoc(loc).toString());
-        List<Sighting> sightings = dao.findAllSight();
-        Field tf = new Field("a name","a value","a size");
-        Field tf1 = new Field("another name","another value","another size");
-        List<Field> fields = new ArrayList<Field>();
-        fields.add(tf);
-        fields.add(tf1);
-        //model.addAttribute("super", sup);
-        model.addAttribute("fields", fields);
-        model.addAttribute("sightings",sightings);
-        return "index";
-    }
-
-    @PostMapping("testForm")
-    public String testForm(HttpServletRequest request) {
-        name = request.getParameter("formFirstName");
-        number = Integer.parseInt(request.getParameter("formNumber"));
-        
-        return "redirect:/test";
-=======
     @PostMapping("sightings")
      public String sightingsForm(HttpServletRequest request) {
          //name = request.getParameter("formFirstName");
          //number = Integer.parseInt(request.getParameter("formNumber"));
 
          return "redirect:/sightings";
->>>>>>> Stashed changes
-    }
+     }  
 }
