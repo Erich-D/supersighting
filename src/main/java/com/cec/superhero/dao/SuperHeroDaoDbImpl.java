@@ -185,7 +185,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
         }
     }
 
-   
+    
     @Override
     public long count(Models type) {
         switch(type){

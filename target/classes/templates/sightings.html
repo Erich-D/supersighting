@@ -14,18 +14,25 @@
     <body>
         <!-- Main Body-->
 
-        <div class="row m-3">
-            <div class="text-left">
-                <h1><a href="index" class="text-dark"> Superhero Sightings</a></h1> 
+        <div>
+            <div>
+                <h1 class = "text-lg-center"><a href="index" class="text-dark"> Superhero Sightings</a></h1> 
             </div>
         </div>
         <div class="topnav">
             <div><a href="heroes">Superheroes</a></div>
             <div><a href="locations">Locations</a></div>
             <div><a href="organizations">Organizations</a></div>
-            <div><a href="sightings" >Sightings</a></div>
+            <div><a class="active" href="sightings" >Sightings</a></div>
             <div><a href="superpowers">Superpowers</a></div>
         </div>
+
+        <div id="map"></div>
+
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
+        defer
+        ></script>
         <!-- End of main body-->
         <!-- Optional Javascript-->
         <!-- jQuery first, then Popper.js, then Bootstrap JS-->

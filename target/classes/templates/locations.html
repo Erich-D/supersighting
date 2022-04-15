@@ -14,17 +14,58 @@
     <body>
         <!-- Main Body-->
 
-        <div class="row m-3">
-            <div class="text-left">
-                <h1><a href="index" class="text-dark"> Superhero Sightings</a></h1> 
+        <div>
+            <div>
+                <h1 class = "text-lg-center"><a href="index" class="text-dark"> Superhero Sightings</a></h1> 
             </div>
         </div>
-        <div class="topnav">
+        <div>
+        </div>
+        <div class="topnav center">
             <div><a href="heroes">Superheroes</a></div>
-            <div><a href="locations">Locations</a></div>
+            <div><a class="active" href="locations">Locations</a></div>
             <div><a href="organizations">Organizations</a></div>
             <div><a href="sightings" >Sightings</a></div>
             <div><a href="superpowers">Superpowers</a></div>
+        </div>
+        <!-- start of table-->
+        <div>
+            <div class="col text-center m-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Address</th>
+                            <th>Superhero Sighted</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="location : ${locations}">
+                            <td class="data" th:text="${location.id}">Location ID</td>
+                            <td class="data" th:text="${location.name}">Location Name</td>
+                            <td class="data" th:text="${location.descr}">Location Description</td>
+                            <td class="data">
+                                <table class="centered">
+                                    <tr th:each="sightings : ${locations.sightings}">
+                                        <td th:text="${sightings.name}">Superhero Sighted</td>
+                                    </tr>
+                                    <!-- <tr th:text="${power.name}">Superpower Name</tr> -->
+                                </table>
+                            </td>
+                            <td class="data" th:text="${location.sightings}"> </td>
+                            <!-- <td th:text="${location.powers}">Superhero Power</td> -->
+                            <td><a href="#" th:href="@{/editLocation(id=${location.id})}">Edit</a></td>
+                            <td><a href="#" th:href="@{/deleteLocation(id=${location.id})}">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- End of main body-->
         <!-- Optional Javascript-->
