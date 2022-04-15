@@ -87,26 +87,26 @@ public class MainController {
         
     }
     
-   @GetMapping("test")
-   public String testPage(Model model) {
+    @GetMapping("index")
+    public String testPage(Model model) {
        //number = (number > supers.count()) ? (int)supers.count():number;
-       Super sup = (Super)dao.findById(Models.SUPERS,number);
-       System.out.println(dao.getLocsWhereSuperSeen(sup).toString());
-       Location loc = (Location)dao.findById(Models.LOCATIONS, 2);
-       System.out.println(dao.getSupersSeenAtLoc(loc).toString());
-       List<Sighting> sightings = dao.findAllSight();
-       Field tf = new Field("a name","a value","a size");
-       Field tf1 = new Field("another name","another value","another size");
-       List<Field> fields = new ArrayList<Field>();
-       fields.add(tf);
-       fields.add(tf1);
-       //model.addAttribute("super", sup);
-       model.addAttribute("fields", fields);
-       model.addAttribute("sightings",sightings);
-       return "home";
-   }
-   
-   @PostMapping("testForm")
+        Super sup = (Super)dao.findById(Models.SUPERS,number);
+        System.out.println(dao.getLocsWhereSuperSeen(sup).toString());
+        Location loc = (Location)dao.findById(Models.LOCATIONS, 2);
+        System.out.println(dao.getSupersSeenAtLoc(loc).toString());
+        List<Sighting> sightings = dao.findAllSight();
+        Field tf = new Field("a name","a value","a size");
+        Field tf1 = new Field("another name","another value","another size");
+        List<Field> fields = new ArrayList<Field>();
+        fields.add(tf);
+        fields.add(tf1);
+        //model.addAttribute("super", sup);
+        model.addAttribute("fields", fields);
+        model.addAttribute("sightings",sightings);
+        return "index";
+    }
+
+    @PostMapping("testForm")
     public String testForm(HttpServletRequest request) {
         name = request.getParameter("formFirstName");
         number = Integer.parseInt(request.getParameter("formNumber"));
