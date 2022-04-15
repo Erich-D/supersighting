@@ -29,12 +29,6 @@ public class Sighting {
     private int id;
     @Column(nullable = false)
     private LocalDateTime date;
-    /*
-    @Column(name = "location_id", insertable = false, updatable = false)
-    private int locationId;
-    @Column(name = "super_id", insertable = false, updatable = false) 
-    private int superId;
-    */
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;

@@ -8,14 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link th:href="@{/css/styles.css}" rel="stylesheet">
-    <title>Course Manager</title>
+    <title>SuperHero Sightings</title>
   </head>
   <body>
     <!-- Main Body of Page -->
     <div class="container">
         <header th:insert="fragments/general.html :: header"> </header>
+        <div th:replace='fragments/general.html :: nav-bar'></div>
         <div th:replace="fragments/general.html :: ticker"></div>
-        <div th:replace="fragments/general.html :: form"></div>
         <div th:replace="fragments/general.html :: footer"></div>
     </div>
     <!-- End main body -->
