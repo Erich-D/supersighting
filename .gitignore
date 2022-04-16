@@ -1,2 +1,10 @@
 /superhero/nbproject/
 /superhero/target/
+target/
+superhero/
+.mvn/
+/ERD.png
+/inserts.txt
+/merge changes.txt
+/mvnw
+/mvnw.cmd
