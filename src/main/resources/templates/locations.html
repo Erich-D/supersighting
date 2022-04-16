@@ -14,14 +14,16 @@
     <body>
         <!-- Main Body-->
 
-        <div class="row m-3">
-            <div class="text-left">
-                <h1><a href="index" class="text-dark"> Superhero Sightings</a></h1> 
+        <div>
+            <div>
+                <h1 class = "text-lg-center"><a href="index" class="text-dark"> Superhero Sightings</a></h1>
             </div>
         </div>
-        <div class="topnav">
+        <div>
+        </div>
+        <div class="topnav center">
             <div><a href="heroes">Superheroes</a></div>
-            <div><a href="locations">Locations</a></div>
+            <div><a class="active" href="locations">Locations</a></div>
             <div><a href="organizations">Organizations</a></div>
             <div><a href="sightings" >Sightings</a></div>
             <div><a href="superpowers">Superpowers</a></div>
@@ -30,7 +32,7 @@
             <button id="toggleLocalForm" class="btn btn-outline-secondary" type="button">Add New Location</button>
             <div id="addLoc" style="display:none;">
                 <div th:replace="fragments/super.html :: addLocalForm"></div>
-            </div> 
+            </div>
         </div>
         <div th:replace="fragments/table.html :: locTable"></div>
         <!-- End of main body-->
@@ -42,4 +44,3 @@
         <script type="text/javascript" th:src="@{/js/main.js}"></script>
     </body>
 </html>
-

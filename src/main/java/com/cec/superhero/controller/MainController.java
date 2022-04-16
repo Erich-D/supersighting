@@ -33,10 +33,10 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class MainController {
-    
+
     @Autowired
     SuperHeroDao dao;
-    
+
     @GetMapping("index")
     public String homePage(Model model, HttpSession session) {
         String head = (false) ? model.getAttribute("test").toString():"Superhero Sightings";
@@ -47,7 +47,7 @@ public class MainController {
         model.addAttribute("headerText", head);
         //Sightings for the ticker tape
         model.addAttribute("sightings",sightings);
-        
+
         return "index";
     }
 
@@ -60,15 +60,15 @@ public class MainController {
         model.addAttribute("organs", organs);
         model.addAttribute("supers",supers);
         return "heroes";
-    } 
-    
+    }
+
     @GetMapping("deleteSuper")
     public String deleteSuper(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         dao.deleteById(Models.SUPERS, id);
         return "redirect:/heroes";
     }
-    
+
     @GetMapping("editSuper")
     public String editSuper(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -81,7 +81,7 @@ public class MainController {
         model.addAttribute("headerText", "Editing "+sup.getName());
         return "editPage";
     }
-    
+
     @PostMapping("editSuper")
     public String updateSuper(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -108,11 +108,11 @@ public class MainController {
         dao.saveOrUpdate(Models.SUPERS, sp);
         return "redirect:/heroes";
     }
-    
+
     @PostMapping("heroes")
      public String supersForm(HttpServletRequest request) {
         List<Organization> organs = dao.findAllOrgs();
-        List<Power> powers = dao.findAllPow(); 
+        List<Power> powers = dao.findAllPow();
         //get inputs
         String name = request.getParameter("name");
         String descr = request.getParameter("descr");
@@ -141,11 +141,11 @@ public class MainController {
                 System.out.println(organ);
             }
         }
-        
+
         dao.saveOrUpdate(Models.SUPERS, newSup);
         return "redirect:/heroes";
     }
-     
+
     @GetMapping("superpowers")
     public String powersPage(Model model, HttpSession session){
         List<Power> powers = dao.findAllPow();
@@ -153,14 +153,14 @@ public class MainController {
         session.setAttribute("test", "Hello World");
         return "superpowers";
     }
-    
+
     @GetMapping("deletePower")
     public String deletePower(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         dao.deleteById(Models.POWERS, id);
         return "redirect:/superpowers";
     }
-    
+
     @PostMapping("superpowers")
      public String powersForm(HttpServletRequest request) {
         String name = request.getParameter("name");
@@ -171,21 +171,21 @@ public class MainController {
         dao.saveOrUpdate(Models.POWERS, np);
         return "redirect:/superpowers";
     }
-     
+
     @GetMapping("locations")
     public String locationsPage(Model model){
         List<Location> locs = dao.findAllLocs();
         model.addAttribute("locs",locs);
         return "locations";
     }
-    
+
     @GetMapping("deleteLocal")
     public String deleteLocal(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         dao.deleteById(Models.LOCATIONS, id);
         return "redirect:/locations";
     }
-    
+
     @PostMapping("locations")
      public String locationsForm(HttpServletRequest request) {
         String name = request.getParameter("name");
@@ -202,22 +202,22 @@ public class MainController {
         nl = (Location)dao.saveOrUpdate(Models.LOCATIONS, nl);
 
         return "redirect:/locations";
-    } 
-     
+    }
+
     @GetMapping("organizations")
     public String organizationsPage(Model model){
         List<Organization> orgs = dao.findAllOrgs();
         model.addAttribute("orgs",orgs);
         return "organizations";
     }
-    
+
     @GetMapping("deleteOrg")
     public String deleteOrg(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         dao.deleteById(Models.ORGANIZATIONS, id);
         return "redirect:/organizations";
     }
-    
+
     @PostMapping("organizations")
      public String organizationsForm(HttpServletRequest request) {
         String name = request.getParameter("name");
@@ -228,28 +228,28 @@ public class MainController {
         org.setDescr(descr);
         org.setAddress(address);
         dao.saveOrUpdate(Models.ORGANIZATIONS, org);
-        
+
         return "redirect:/organizations";
     }
-     
+
     @GetMapping("sightings")
     public String sightingsPage(Model model){
         List<Sighting> sightings = dao.findAllSight();
         model.addAttribute("sightings", sightings);
         return "sightings";
     }
-    
+
     @GetMapping("deleteSighting")
     public String deleteSighting(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         dao.deleteById(Models.SIGHTINGS, id);
         return "redirect:/sightings";
     }
-    
+
     @PostMapping("sightings")
      public String sightingsForm(HttpServletRequest request) {
         List<Location> locs = dao.findAllLocs();
-        List<Super> supers = dao.findAllSups(); 
+        List<Super> supers = dao.findAllSups();
         LocalDateTime date = LocalDateTime.parse(request.getParameter("date"));
         String sp = request.getParameter("supers");
         String lc = request.getParameter("locs");
@@ -263,14 +263,14 @@ public class MainController {
         if(lc != null || !lc.isBlank()){
             sg.setLocation(locs.stream()
                         .filter(p -> p.getName().equals(lc))
-                        .findFirst().orElse(null)); 
+                        .findFirst().orElse(null));
         }
         try{
             dao.saveOrUpdate(Models.SIGHTINGS, sg);
         }catch(DataIntegrityViolationException e){
             System.out.println(e.toString());
         }
-        
+
         return "redirect:/sightings";
-     }  
+     }
 }

@@ -186,7 +186,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
         }
     }
 
-   
+    
     @Override
     public long count(Models type) throws DataIntegrityViolationException{
         switch(type){

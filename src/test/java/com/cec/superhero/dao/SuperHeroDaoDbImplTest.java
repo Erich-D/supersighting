@@ -36,6 +36,7 @@ public class SuperHeroDaoDbImplTest {
     @Autowired
     SuperHeroDao dao;
     
+    @Autowired
     public SuperHeroDaoDbImplTest() {
     }
     

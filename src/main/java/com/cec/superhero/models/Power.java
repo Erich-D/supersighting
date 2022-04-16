@@ -26,10 +26,13 @@ public class Power {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     private int id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String descr;
+    
     @ManyToMany(mappedBy = "powers")
     private List<Super> supers = new ArrayList<Super>();
     
