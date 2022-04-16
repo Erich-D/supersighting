@@ -65,6 +65,9 @@ public class MainController {
                 .collect(Collectors.toList());
         // model.addAttribute("headerText", "Superheroes and Villians");
         model.addAttribute("fields", fields);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         model.addAttribute("supers",supers);
         return "heroes";
@@ -183,6 +186,7 @@ public class MainController {
     @GetMapping("locations")
     public String locationsPage(Model model){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         List<Location> locs = dao.findAllLocs();
         model.addAttribute("locs",locs);
         return "locations";
@@ -283,6 +287,8 @@ public class MainController {
         return "redirect:/sightings";
      }
 =======
+=======
+>>>>>>> Stashed changes
         model.addAttribute("locations", dao.findAllLocs());
         return "locations";
     }
@@ -304,5 +310,8 @@ public class MainController {
         model.addAttribute("superpowers", dao.findAllPow());
         return "superpowers";
     }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
