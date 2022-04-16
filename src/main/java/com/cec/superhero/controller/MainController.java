@@ -54,10 +54,18 @@ public class MainController {
     @GetMapping("heroes")
     public String heroesPage(Model model){
         List<Super> supers = dao.findAllSups();
+<<<<<<< Updated upstream
         List<Power> powers = dao.findAllPow();
         List<Organization> organs = dao.findAllOrgs();
         model.addAttribute("powers", powers);
         model.addAttribute("organs", organs);
+=======
+        List<java.lang.reflect.Field> fds = Arrays.stream(Super.class.getDeclaredFields())
+                .filter(f -> Modifier.isPublic(f.getModifiers()))
+                .collect(Collectors.toList());
+        // model.addAttribute("headerText", "Superheroes and Villians");
+        model.addAttribute("fields", fields);
+>>>>>>> Stashed changes
         model.addAttribute("supers",supers);
         return "heroes";
     }
@@ -174,6 +182,7 @@ public class MainController {
 
     @GetMapping("locations")
     public String locationsPage(Model model){
+<<<<<<< Updated upstream
         List<Location> locs = dao.findAllLocs();
         model.addAttribute("locs",locs);
         return "locations";
@@ -273,4 +282,27 @@ public class MainController {
 
         return "redirect:/sightings";
      }
+=======
+        model.addAttribute("locations", dao.findAllLocs());
+        return "locations";
+    }
+
+    @GetMapping("organizations")
+    public String organizationsPage(Model model){
+        model.addAttribute("organizations", dao.findAllOrgs());
+        return "organizations";
+    }
+
+    @GetMapping("sightings")
+    public String sightingsPage(Model model){
+        model.addAttribute("sightings", dao.findAllSight());
+        return "sightings";
+    }
+
+    @GetMapping("superpowers")
+    public String superpowersPage(Model model){
+        model.addAttribute("superpowers", dao.findAllPow());
+        return "superpowers";
+    }
+>>>>>>> Stashed changes
 }
