@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link th:href="@{/css/styles.css}" rel="stylesheet">
+<link rel ="stylesheet" th:href="@{/css/navbar.css}">
+</head>
+<body>
+    <div class="container" th:fragment="editSuperForm">
+        <form action="editSuper" method="POST">
+            <div class="form-group row">
+                <label for="name" class="col-3 col-form-label">
+                    Name</label>
+                <div class="col-9">
+                    <input type="text" name="name" 
+                        id="name" class="form-control"
+                        th:value="${super.name}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="descr" class="col-3 col-form-label">
+                    Description</label>
+                <div class="col-9">
+                    <input type="text" name="descr" 
+                        id="descr" class="form-control"
+                        th:value="${super.descr}"/>
+                </div>
+            </div>
+            <div class="form-group flex-row d-flex">
+                <div class="p-2">
+                    <input type="radio" name="hero" 
+                             id="hero" value="hero" th:checked="${super.hero} ? 'checked'"/>
+                    <label for="hero" class="col-form-label">
+                        Is Hero?</label>
+                    <input type="radio" name="hero" 
+                             id="villain" value="villain" th:checked="!${super.hero} ? 'checked'"/>
+                    <label for="villain" class="col-form-label">
+                        Is Villain?</label>
+                </div>
+                <div class="p-2">
+                    <div>
+                        <label>Select Powers</label>
+                        <div th:each="power : ${pows}">
+                            <input type="checkbox" th:name="${power.name}" 
+                                id="power" th:value="${power.name}" th:checked="${super.powers.contains(power)} ? 'checked'"/>
+                            <label for="power" class="col-form-label" th:text="${power.name}">
+                                Select Powers</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <label>Select Organizations</label>
+                        <div th:each="org : ${orgs}">
+                            <input type="checkbox" th:name="${org.name}" 
+                                id="org" th:value="${org.name}" th:checked="${super.organizations.contains(org)} ? 'checked'"/>
+                            <label for="org" class="col-form-label" th:text="${org.name}">
+                                Select Powers</label>
+                        </div>
+                </div>
+            </div>
+            <input type="hidden" name="id" th:value="${super.id}"/>
+            <button id="heroEditSubmit" type="submit" class="btn btn-primary">Update Super</button>
+        </form>
+    </div>
+    <!-- edit powers -->
+    <div class="container" th:fragment="editPowerForm" style="display:none;">
+        <form action="superpowers" method="POST">
+            <div class="form-group row">
+                <label for="name" class="col-3 col-form-label">
+                    Name</label>
+                <div class="col-9">
+                    <input type="text" name="name" 
+                        id="name" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="descr" class="col-3 col-form-label">
+                    Description</label>
+                <div class="col-9">
+                    <input type="text" name="descr" 
+                        id="descr" class="form-control"/>
+                </div>
+            </div>
+            <button id="powerSubmit" type="submit" class="btn btn-primary">Add Power</button>
+        </form>
+    </div>
+    <!-- edit location -->
+    <div class="container" th:fragment="editLocalForm" style="display:none;">
+        <form action="locations" method="POST">
+            <div class="form-group row">
+                <label for="name" class="col-3 col-form-label">
+                    Name</label>
+                <div class="col-9">
+                    <input type="text" name="name" 
+                        id="name" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="descr" class="col-3 col-form-label">
+                    Description</label>
+                <div class="col-9">
+                    <input type="text" name="descr" 
+                        id="descr" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="address" class="col-3 col-form-label">
+                    Address</label>
+                <div class="col-9">
+                    <input type="text" name="address" 
+                        id="address" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="lat" class="col-3 col-form-label">
+                    Latitude</label>
+                <div class="col-9">
+                    <input type="text" name="lat" 
+                        id="lat" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="log" class="col-3 col-form-label">
+                    Longitude</label>
+                <div class="col-9">
+                    <input type="text" name="log" 
+                        id="log" class="form-control"/>
+                </div>
+            </div>
+            <button id="localSubmit" type="submit" class="btn btn-primary">Add Location</button>
+        </form>
+    </div>
+    <!-- edit organizations -->
+    <div class="container" th:fragment="editOrgForm">
+        <form action="organizations" method="POST">
+            <div class="form-group row">
+                <label for="name" class="col-3 col-form-label">
+                    Name</label>
+                <div class="col-9">
+                    <input type="text" name="name" 
+                        id="name" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="descr" class="col-3 col-form-label">
+                    Description</label>
+                <div class="col-9">
+                    <input type="text" name="descr" 
+                        id="descr" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="address" class="col-3 col-form-label">
+                    Address</label>
+                <div class="col-9">
+                    <input type="text" name="address" 
+                        id="address" class="form-control"/>
+                </div>
+            </div>
+            <button id="orgSubmit" type="submit" class="btn btn-primary">Add Organization</button>
+        </form>
+    </div>
+    <!-- edit sightings -->
+    <div class="container" th:fragment="editSightForm">
+        <form action="sightings" method="POST">
+            <div class="form-group row">
+                <label for="date" class="col-3 col-form-label">
+                    Date</label>
+                <div class="col-9">
+                    <input type="datetime-local" name="date" 
+                        id="date" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group flex-row d-flex">
+                <div class="p-2">
+                    <label for="supers" class="col-form-label">
+                        Select Super</label>
+                    <div class="col-2">
+                        <select name="supers" id="supers">
+                            <option th:each="super : ${supers}" th:text="${super.name}" th:value="${super.name}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <label for="locs" class="col-form-label">
+                        Select Location</label>
+                    <div class="col-2">
+                        <select name="locs" id="locs">
+                            <option th:each="loc : ${locs}" th:text="${loc.name}" th:value="${loc.name}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button id="sightSubmit" type="submit" class="btn btn-primary">Add Sighting</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+</html>

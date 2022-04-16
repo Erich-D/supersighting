@@ -3,6 +3,7 @@
 <head th:fragment="headerfiles">
 <meta charset="UTF-8" />
 <link th:href="@{/css/styles.css}" rel="stylesheet">
+<link rel ="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
     <!-- header fragments -->
@@ -98,6 +99,11 @@
             <p th:text="${value.name}"></p>
         </div>
     </div>
+    <div th:fragment="dateList">
+        <div th:each="value : ${list}">
+            <p th:text="${value.date}"></p>
+        </div>
+    </div>
     <!-- footer fragments -->
     <footer th:fragment="footer">
         <a th:href="@{/supers}">Supers</a> | 
@@ -106,5 +112,6 @@
         <a th:href="@{/organizations}">Organizations</a> |
         <a th:href="@{/sightings}">Sightings</a>
     </footer>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>

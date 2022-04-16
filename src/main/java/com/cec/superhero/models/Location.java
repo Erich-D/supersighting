@@ -104,6 +104,15 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public List<Sighting> getSightings() {
+        return sightings;
+    }
+
+    public void setSightings(List<Sighting> sightings) {
+        this.sightings = sightings;
+    }
+    
+    
     @Override
     public String toString() {
         return "Location{" + "id=" + id + ", name=" + name + ", descr=" + descr + ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude + '}';

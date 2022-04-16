@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -43,7 +44,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
     
     @Override
     @Transactional
-    public List<Super> getSupersSeenAtLoc(Location loc) {
+    public List<Super> getSupersSeenAtLoc(Location loc)throws DataIntegrityViolationException {
         loc = location.findById(loc.getId()).orElse(null);
         List<Sighting> sites = sighting.findByLocationId(loc.getId());
         return sites.stream().map(s -> s.getSuperp()).collect(Collectors.toList());
@@ -51,7 +52,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
 
     @Override
     @Transactional
-    public List<Location> getLocsWhereSuperSeen(Super sup) {
+    public List<Location> getLocsWhereSuperSeen(Super sup) throws DataIntegrityViolationException{
         sup = supers.findById(sup.getId()).orElse(null);
         List<Sighting> sites = sup.getSightings();
         return sites.stream().map(s -> s.getLocation()).collect(Collectors.toList());
@@ -59,27 +60,27 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
 
     @Override
     @Transactional
-    public List<Sighting> getSightingsByDate(LocalDateTime date) {
+    public List<Sighting> getSightingsByDate(LocalDateTime date)throws DataIntegrityViolationException {
         return sighting.findByDate(date);
     }
 
     @Override
     @Transactional
-    public List<Super> getMembersOfOrg(String name) {
+    public List<Super> getMembersOfOrg(String name) throws DataIntegrityViolationException{
         List<Organization> orgs = organ.findByName(name);
         return orgs.stream().flatMap(o -> o.getSupers().stream()).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<Organization> getSuperBelongsTo(String name) {
+    public List<Organization> getSuperBelongsTo(String name) throws DataIntegrityViolationException{
         List<Super> sups = supers.findByName(name);
         return sups.stream().flatMap(s -> s.getOrganizations().stream()).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Sighting reportNewSighting(Location loc, Super sup) {
+    public Sighting reportNewSighting(Location loc, Super sup) throws DataIntegrityViolationException{
         loc = location.save(loc);
         sup = supers.save(sup);
         Sighting newSight = new Sighting();
@@ -98,7 +99,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
      * @return
      */
     @Override
-    public Object findById(Models type, int id) {
+    public Object findById(Models type, int id) throws DataIntegrityViolationException{
         switch(type){
             case SUPERS:
                 return supers.findById(id).orElse(null);
@@ -125,7 +126,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
      */
     @Override
     @Transactional
-    public Object saveOrUpdate(Models type, Object ob) {
+    public Object saveOrUpdate(Models type, Object ob)throws DataIntegrityViolationException {
         switch(type){
             case SUPERS:
                 return supers.save((Super)ob);
@@ -144,7 +145,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
 
     @Override
     @Transactional
-    public Boolean deleteById(Models type, int id) {
+    public Boolean deleteById(Models type, int id) throws DataIntegrityViolationException{
         switch(type){
             case SUPERS:
                 supers.deleteById(id);
@@ -168,7 +169,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
     }
 
     @Override
-    public Boolean existsById(Models type, int id) {
+    public Boolean existsById(Models type, int id) throws DataIntegrityViolationException{
         switch(type){
             case SUPERS:
                 return supers.existsById(id);
@@ -187,7 +188,7 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
 
    
     @Override
-    public long count(Models type) {
+    public long count(Models type) throws DataIntegrityViolationException{
         switch(type){
             case SUPERS:
                 return supers.count();
@@ -205,27 +206,27 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
     }
 
     @Override
-    public List<Location> findAllLocs() {
+    public List<Location> findAllLocs() throws DataIntegrityViolationException{
         return location.findAll();
     }
 
     @Override
-    public List<Organization> findAllOrgs() {
+    public List<Organization> findAllOrgs() throws DataIntegrityViolationException{
         return organ.findAll();
     }
 
     @Override
-    public List<Power> findAllPow() {
+    public List<Power> findAllPow()throws DataIntegrityViolationException {
         return power.findAll();
     }
 
     @Override
-    public List<Sighting> findAllSight() {
+    public List<Sighting> findAllSight()throws DataIntegrityViolationException {
         return sighting.findAll();
     }
 
     @Override
-    public List<Super> findAllSups() {
+    public List<Super> findAllSups()throws DataIntegrityViolationException {
         return supers.findAll();
     }
     

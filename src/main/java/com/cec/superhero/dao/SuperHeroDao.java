@@ -13,32 +13,33 @@ import com.cec.superhero.models.Sighting;
 import com.cec.superhero.models.Super;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  *
  * @author etdeh
  */
 public interface SuperHeroDao {
-    List<Super> getSupersSeenAtLoc(Location loc);
-    List<Location> getLocsWhereSuperSeen(Super sup);
-    List<Sighting> getSightingsByDate(LocalDateTime date);
-    List<Super> getMembersOfOrg(String name);
-    List<Organization> getSuperBelongsTo(String name);
-    Sighting reportNewSighting(Location loc, Super sup);
+    List<Super> getSupersSeenAtLoc(Location loc)throws DataIntegrityViolationException;
+    List<Location> getLocsWhereSuperSeen(Super sup)throws DataIntegrityViolationException;
+    List<Sighting> getSightingsByDate(LocalDateTime date)throws DataIntegrityViolationException;
+    List<Super> getMembersOfOrg(String name)throws DataIntegrityViolationException;
+    List<Organization> getSuperBelongsTo(String name)throws DataIntegrityViolationException;
+    Sighting reportNewSighting(Location loc, Super sup)throws DataIntegrityViolationException;
     //views objects
-    Object findById(Models type, int id);
+    Object findById(Models type, int id)throws DataIntegrityViolationException;
     //for creating or updating objects
-    Object saveOrUpdate(Models type, Object ob);
+    Object saveOrUpdate(Models type, Object ob)throws DataIntegrityViolationException;
     //for deleting objects
-    Boolean deleteById(Models type, int id);
+    Boolean deleteById(Models type, int id)throws DataIntegrityViolationException;
     //checks if object exists
-    Boolean existsById(Models type, int id);
+    Boolean existsById(Models type, int id)throws DataIntegrityViolationException;
     //finds all objects of type
-    List<Location> findAllLocs();
-    List<Organization> findAllOrgs();
-    List<Power> findAllPow();
-    List<Sighting> findAllSight();
-    List<Super> findAllSups();
+    List<Location> findAllLocs()throws DataIntegrityViolationException;
+    List<Organization> findAllOrgs()throws DataIntegrityViolationException;
+    List<Power> findAllPow()throws DataIntegrityViolationException;
+    List<Sighting> findAllSight()throws DataIntegrityViolationException;
+    List<Super> findAllSups()throws DataIntegrityViolationException;
     //gets object count
-    long count(Models type);
+    long count(Models type)throws DataIntegrityViolationException;
 }
