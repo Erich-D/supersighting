@@ -51,6 +51,8 @@ public class MainController {
         return "index";
     }
 
+    //--------------Hero Villain Pages --------------------
+    
     @GetMapping("heroes")
     public String heroesPage(Model model){
         List<Super> supers = dao.findAllSups();
@@ -104,7 +106,6 @@ public class MainController {
                 sp.getOrganizations().add(org);
             }
         }
-        System.out.println(request.getParameter("Immeasurable Speed"));
         dao.saveOrUpdate(Models.SUPERS, sp);
         return "redirect:/heroes";
     }
@@ -146,6 +147,8 @@ public class MainController {
         return "redirect:/heroes";
     }
 
+    //-------------Super Powers Pages------------------------------- 
+     
     @GetMapping("superpowers")
     public String powersPage(Model model, HttpSession session){
         List<Power> powers = dao.findAllPow();
@@ -154,6 +157,25 @@ public class MainController {
         return "superpowers";
     }
 
+    @GetMapping("editPower")
+    public String editPower(HttpServletRequest request, Model model){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Power pow = (Power)dao.findById(Models.POWERS, id);
+        model.addAttribute("power", pow);
+        model.addAttribute("headerText", "Editing "+pow.getName());
+        return "editPowerPage";
+    }
+    
+    @PostMapping("editPower")
+    public String updateEditedPower(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Power pow = (Power)dao.findById(Models.POWERS, id);
+        pow.setName(request.getParameter("name"));
+        pow.setDescr(request.getParameter("descr"));
+        dao.saveOrUpdate(Models.POWERS, pow);
+        return "redirect:/superpowers";
+    }
+    
     @GetMapping("deletePower")
     public String deletePower(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -172,6 +194,8 @@ public class MainController {
         return "redirect:/superpowers";
     }
 
+    //-----------Locations of sightings pages------------------ 
+     
     @GetMapping("locations")
     public String locationsPage(Model model){
         List<Location> locs = dao.findAllLocs();
@@ -179,6 +203,28 @@ public class MainController {
         return "locations";
     }
 
+    @GetMapping("editLocal")
+    public String editLocal(HttpServletRequest request, Model model){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location loc = (Location)dao.findById(Models.LOCATIONS, id);
+        model.addAttribute("loc", loc);
+        model.addAttribute("headerText", "Editing "+loc.getName());
+        return "editLocalPage";
+    }
+    
+    @PostMapping("editLocal")
+    public String updateEditedLocal(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location loc = (Location)dao.findById(Models.LOCATIONS, id);
+        loc.setName(request.getParameter("name"));
+        loc.setDescr(request.getParameter("descr"));
+        loc.setAddress(request.getParameter("address"));
+        loc.setLatitude(Float.parseFloat(request.getParameter("lat")));
+        loc.setLongitude(Float.parseFloat(request.getParameter("log")));
+        dao.saveOrUpdate(Models.LOCATIONS, loc);
+        return "redirect:/locations";
+    }
+    
     @GetMapping("deleteLocal")
     public String deleteLocal(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -203,6 +249,8 @@ public class MainController {
 
         return "redirect:/locations";
     }
+     
+    //----------Super Hero/Villain Organization pages--------------- 
 
     @GetMapping("organizations")
     public String organizationsPage(Model model){
@@ -211,6 +259,26 @@ public class MainController {
         return "organizations";
     }
 
+    @GetMapping("editOrg")
+    public String editOrg(HttpServletRequest request, Model model){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Organization org = (Organization)dao.findById(Models.ORGANIZATIONS, id);
+        model.addAttribute("org", org);
+        model.addAttribute("headerText", "Editing "+org.getName());
+        return "editOrgPage";
+    }
+    
+    @PostMapping("editOrg")
+    public String updateEditedOrg(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Organization org = (Organization)dao.findById(Models.ORGANIZATIONS, id);
+        org.setName(request.getParameter("name"));
+        org.setDescr(request.getParameter("descr"));
+        org.setAddress(request.getParameter("address"));
+        dao.saveOrUpdate(Models.ORGANIZATIONS, org);
+        return "redirect:/organizations";
+    }
+    
     @GetMapping("deleteOrg")
     public String deleteOrg(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -231,14 +299,45 @@ public class MainController {
 
         return "redirect:/organizations";
     }
+     
+    //--------------Super Sightings Pages--------------------------- 
 
     @GetMapping("sightings")
     public String sightingsPage(Model model){
         List<Sighting> sightings = dao.findAllSight();
+        List<Super> supers = dao.findAllSups();
+        List<Location> locs = dao.findAllLocs();
+        model.addAttribute("supers", supers);
+        model.addAttribute("locs", locs);
         model.addAttribute("sightings", sightings);
         return "sightings";
     }
 
+    @GetMapping("editSighting")
+    public String editSighting(HttpServletRequest request, Model model){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Sighting sg = (Sighting)dao.findById(Models.SIGHTINGS, id);
+        List<Super> sups = dao.findAllSups();
+        List<Location> locs = dao.findAllLocs();
+        model.addAttribute("locs", locs);
+        model.addAttribute("sups", sups);
+        model.addAttribute("sg", sg);
+        model.addAttribute("headerText", "Editing Sighting From "+sg.getDate());
+        return "editSightingPage";
+    }
+    
+    @PostMapping("editSighting")
+    public String updateSighting(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Sighting sg = (Sighting)dao.findById(Models.SIGHTINGS, id);
+        System.out.print(request.getParameter("seenSuper")+" "+request.getParameter("local"));
+        sg.setDate(LocalDateTime.parse(request.getParameter("date")));
+        sg.setSuperp((Super)dao.findById(Models.SUPERS, Integer.parseInt(request.getParameter("seenSuper"))));
+        sg.setLocation((Location)dao.findById(Models.LOCATIONS, Integer.parseInt(request.getParameter("local"))));
+        dao.saveOrUpdate(Models.SIGHTINGS, sg);
+        return "redirect:/sightings";
+    }
+    
     @GetMapping("deleteSighting")
     public String deleteSighting(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));

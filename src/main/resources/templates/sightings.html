@@ -27,9 +27,23 @@
             <div><a class="active" href="sightings" >Sightings</a></div>
             <div><a href="superpowers">Superpowers</a></div>
         </div>
-
+        <div class="container">
+            <button id="toggleSightForm" class="btn btn-outline-secondary" type="button">Add New Sighting</button>
+            <div id="addSight" style="display:none;">
+                <div th:replace="fragments/super.html :: addSightForm"></div>
+            </div> 
+        </div>
+        <div th:replace="fragments/table.html :: sightTable"></div>
         <div id="map"></div>
-
+        <div class="container">
+            <button id="toggleSightForm" class="btn btn-outline-secondary" type="button">Add New Sighting</button>
+            <div id="addSight" style="display:none;">
+                <div th:replace="fragments/super.html :: addSightForm"></div>
+            </div> 
+        </div>
+        <div th:replace="fragments/table.html :: sightTable"></div>
+        <div th:replace="fragments/table.html :: sightTable"></div>
+        <div th:replace="fragments/table.html :: sightTable"></div>
         <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
         defer

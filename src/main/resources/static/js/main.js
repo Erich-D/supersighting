@@ -10,31 +10,31 @@ $(document).ready(function () {
 
 function getForms(){
     $("#toggleSuperForm").click(function(event){
-        $("#addSuper").show();
+        $("#addSuper").toggle();
     });
     $("#heroSubmit").click(function(event){
         $("#addSuper").hide();
     });
     $("#togglePowersForm").click(function(event){
-        $("#addPower").show();
+        $("#addPower").toggle();
     });
     $("#powerSubmit").click(function(event){
         $("#addPower").hide();
     });
     $("#toggleLocalForm").click(function(event){
-        $("#addLoc").show();
+        $("#addLoc").toggle();
     });
     $("#localSubmit").click(function(event){
         $("#addLoc").hide();
     });
     $("#toggleOrgForm").click(function(event){
-        $("#addOrg").show();
+        $("#addOrg").toggle();
     });
     $("#orgSubmit").click(function(event){
         $("#addOrg").hide();
     });
     $("#toggleSightForm").click(function(event){
-        $("#addSight").show();
+        $("#addSight").toggle();
     });
     $("#sightSubmit").click(function(event){
         $("#addSight").hide();
