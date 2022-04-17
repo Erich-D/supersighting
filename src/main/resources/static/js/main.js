@@ -50,3 +50,31 @@ function getEdits(){
         $("#superEdit").hide();
     });
 }
+
+
+function initMap(){
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: {lat: 33.432102, lng: -111.737564},
+    zoom: 5
+    });
+  console.log(s1lat);
+  
+  $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/api/locals',
+        success: function(locArray) {
+            for(x in locArray){
+                console.log(locArray[x]);
+                var markerGrandPlace = new google.maps.Marker({
+                    position: new google.maps.LatLng(locArray[x][3], locArray[x][4]),
+                    map: map,
+                    title: locArray[x][1]
+                  });
+            }
+        },
+        error: function() {
+            alert('FAILURE!');
+        }
+    })
+ 
+}

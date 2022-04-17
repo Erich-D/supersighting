@@ -100,3 +100,17 @@ table.centered{
     }
 
 /* end of map style*/
+
+#map-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#map-container {
+  padding: 56.25% 0 0 0;
+  height: 0;
+  position: relative;
+  }

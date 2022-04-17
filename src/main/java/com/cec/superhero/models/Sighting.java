@@ -5,11 +5,11 @@
  */
 package com.cec.superhero.models;
 
+import com.google.gson.Gson;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +27,7 @@ public class Sighting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
+    //@NotBlank(message = "Please select a date")
     @Column(nullable = false)
     private LocalDateTime date;
     @ManyToOne//(fetch = FetchType.LAZY)
@@ -67,6 +68,13 @@ public class Sighting {
     public void setSuperp(Super superp) {
         this.superp = superp;
     }
+    
+    public  String  getJSON()
+    {
+        Gson gson = new Gson();
+       return gson.toJson(this);
+    }
+
 
     @Override
     public String toString() {

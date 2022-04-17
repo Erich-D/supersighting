@@ -5,6 +5,7 @@
  */
 package com.cec.superhero.models;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -26,10 +28,10 @@ public class Power {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     private int id;
-
+    @NotBlank(message = "Power must have name")
     @Column(nullable = false)
     private String name;
-
+    @NotBlank(message = "Power needs a description")
     @Column(nullable = false)
     private String descr;
     
@@ -69,6 +71,13 @@ public class Power {
     public void setDescr(String descr) {
         this.descr = descr;
     }
+    
+    public  String  getJSON()
+    {
+        Gson gson = new Gson();
+       return gson.toJson(this);
+    }
+
 
     @Override
     public String toString() {

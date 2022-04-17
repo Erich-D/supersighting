@@ -5,6 +5,7 @@
  */
 package com.cec.superhero.models;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -32,6 +34,7 @@ public class Super {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
+    @NotBlank(message = "Name must be provided")
     @Column(nullable = false)
     private String name;
     @Column
@@ -123,6 +126,13 @@ public class Super {
         this.sightings = sightings;
     }
 
+    public  String  getJSON()
+    {
+        Gson gson = new Gson();
+       return gson.toJson(this);
+    }
+
+    
     @Override
     public String toString() {
         return "Super{" + "id=" + id + ", name=" + name + ", descr=" + descr + ", hero=" + hero + '}';
