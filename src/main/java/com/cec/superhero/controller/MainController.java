@@ -54,21 +54,17 @@ public class MainController {
     @GetMapping("heroes")
     public String heroesPage(Model model){
         List<Super> supers = dao.findAllSups();
-<<<<<<< Updated upstream
-        List<Power> powers = dao.findAllPow();
-        List<Organization> organs = dao.findAllOrgs();
-        model.addAttribute("powers", powers);
-        model.addAttribute("organs", organs);
-=======
+
+        //List<Power> powers = dao.findAllPow();
+        //List<Organization> organs = dao.findAllOrgs();
+        //model.addAttribute("powers", powers);
+        //model.addAttribute("organs", organs);
+
         List<java.lang.reflect.Field> fds = Arrays.stream(Super.class.getDeclaredFields())
                 .filter(f -> Modifier.isPublic(f.getModifiers()))
                 .collect(Collectors.toList());
         // model.addAttribute("headerText", "Superheroes and Villians");
-        model.addAttribute("fields", fields);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+        //model.addAttribute("fields", fields);
         model.addAttribute("supers",supers);
         return "heroes";
     }
@@ -121,7 +117,7 @@ public class MainController {
     }
 
     @PostMapping("heroes")
-     public String supersForm(HttpServletRequest request) {
+    public String supersForm(HttpServletRequest request) {
         List<Organization> organs = dao.findAllOrgs();
         List<Power> powers = dao.findAllPow();
         //get inputs
@@ -147,7 +143,7 @@ public class MainController {
         if(organsl != null){
             for(String organ : organsl){
                 newSup.getOrganizations().add(organs.stream()
-                         .filter(o -> o.getName().equals(organ))
+                        .filter(o -> o.getName().equals(organ))
                         .findFirst().orElse(null));
                 System.out.println(organ);
             }
@@ -173,7 +169,7 @@ public class MainController {
     }
 
     @PostMapping("superpowers")
-     public String powersForm(HttpServletRequest request) {
+    public String powersForm(HttpServletRequest request) {
         String name = request.getParameter("name");
         String descr = request.getParameter("descr");
         Power np = new Power();
@@ -185,8 +181,6 @@ public class MainController {
 
     @GetMapping("locations")
     public String locationsPage(Model model){
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         List<Location> locs = dao.findAllLocs();
         model.addAttribute("locs",locs);
         return "locations";
@@ -200,7 +194,7 @@ public class MainController {
     }
 
     @PostMapping("locations")
-     public String locationsForm(HttpServletRequest request) {
+    public String locationsForm(HttpServletRequest request) {
         String name = request.getParameter("name");
         String descr = request.getParameter("descr");
         String address = request.getParameter("address");
@@ -232,7 +226,7 @@ public class MainController {
     }
 
     @PostMapping("organizations")
-     public String organizationsForm(HttpServletRequest request) {
+    public String organizationsForm(HttpServletRequest request) {
         String name = request.getParameter("name");
         String descr = request.getParameter("descr");
         String address = request.getParameter("address");
@@ -260,7 +254,7 @@ public class MainController {
     }
 
     @PostMapping("sightings")
-     public String sightingsForm(HttpServletRequest request) {
+    public String sightingsForm(HttpServletRequest request) {
         List<Location> locs = dao.findAllLocs();
         List<Super> supers = dao.findAllSups();
         LocalDateTime date = LocalDateTime.parse(request.getParameter("date"));
@@ -285,33 +279,5 @@ public class MainController {
         }
 
         return "redirect:/sightings";
-     }
-=======
-=======
->>>>>>> Stashed changes
-        model.addAttribute("locations", dao.findAllLocs());
-        return "locations";
     }
-
-    @GetMapping("organizations")
-    public String organizationsPage(Model model){
-        model.addAttribute("organizations", dao.findAllOrgs());
-        return "organizations";
-    }
-
-    @GetMapping("sightings")
-    public String sightingsPage(Model model){
-        model.addAttribute("sightings", dao.findAllSight());
-        return "sightings";
-    }
-
-    @GetMapping("superpowers")
-    public String superpowersPage(Model model){
-        model.addAttribute("superpowers", dao.findAllPow());
-        return "superpowers";
-    }
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
