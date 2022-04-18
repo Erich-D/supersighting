@@ -12,7 +12,7 @@
 <body>
     <!-- add super form -->
     <div class="container" th:fragment="addForm">
-        <form action="heroes" method="POST">
+        <form action="heroes" method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
@@ -29,6 +29,15 @@
                         id="descr" class="form-control"/>
                 </div>
             </div>
+            <!-- photo portion -->
+            <div>
+
+                <label>Photos: </label>
+                <input type="file" name="image" accept="image/png, image/jpeg" />
+
+            </div>
+            
+            <!-- end photo portion -->
             <div class="form-group flex-row d-flex">
                 <div class="p-2">
                     <input type="checkbox" name="hero" 

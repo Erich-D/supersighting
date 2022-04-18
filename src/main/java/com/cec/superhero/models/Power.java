@@ -78,6 +78,15 @@ public class Power {
        return gson.toJson(this);
     }
 
+    public List<Super> getSupers() {
+        return supers;
+    }
+
+    public void setSupers(List<Super> supers) {
+        this.supers = supers;
+    }
+    
+    
 
     @Override
     public String toString() {

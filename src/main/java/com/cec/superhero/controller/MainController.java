@@ -30,8 +30,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -117,7 +119,8 @@ public class MainController {
     }
 
     @PostMapping("heroes")
-     public String supersForm(HttpServletRequest request) {
+     public String supersForm(HttpServletRequest request, 
+             @RequestParam("image") MultipartFile multipartFile) {
         String name = request.getParameter("name");
         String descr = request.getParameter("descr");
         boolean hero = (request.getParameter("hero")=="true") ? true:false;
@@ -136,6 +139,7 @@ public class MainController {
             newSup.getOrganizations().add((Organization)dao.findById(Models.ORGANIZATIONS,
                     Integer.parseInt(id)));
         }
+        System.out.println(multipartFile.getContentType());
         newSup = (Super)dao.saveOrUpdate(Models.SUPERS, newSup);
         return "redirect:/heroes";
     }

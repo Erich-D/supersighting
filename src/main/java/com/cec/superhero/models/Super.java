@@ -41,6 +41,8 @@ public class Super {
     private String descr;
     @Column
     private Boolean hero;
+    @Column(nullable = true, length = 64)
+    private String photos;
     @ManyToMany
     @JoinTable(name = "powers_has_super",
             joinColumns = {@JoinColumn(name = "super_id")},
@@ -130,6 +132,14 @@ public class Super {
     {
         Gson gson = new Gson();
        return gson.toJson(this);
+    }
+
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
     }
 
     
