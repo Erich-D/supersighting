@@ -20,20 +20,20 @@
                 <h1 class = "text-lg-center"><a href="index" class="text-dark"> Superhero Sightings</a></h1>
             </div>
         </div>
-        <div class="topnav">
+        <div class="topnav center">
             <div><a href="heroes">Superheroes</a></div>
             <div><a href="locations">Locations</a></div>
             <div><a href="organizations">Organizations</a></div>
             <div><a class="active" href="sightings" >Sightings</a></div>
             <div><a href="superpowers">Superpowers</a></div>
         </div>
-        <div class="container">
+        <div class="container" align="center">
             <button id="toggleSightForm" class="btn btn-outline-secondary" type="button">Add New Sighting</button>
             <form action="sitebydate" method="POST" style="display:inline;">
                 <select name="locSelect" class="form-select" aria-label="Default select example">
                     <option value="0" th:selected="${select==0}">Filter by Date</option>
                     <option th:each="day : ${times}" th:value="${day.id}" th:text="${day.date}" th:selected="${selects==day.id}">One</option>
-                  </select>
+                </select>
                 <input type="submit" value="Filter Locations" />
             </form>
             <div id="addSight" style="display:none;">
@@ -46,7 +46,6 @@
                 <div id="map-canvas"></div>
             </div>
         </div>
-       
         
         <!-- End of main body-->
         <!-- Optional Javascript-->
