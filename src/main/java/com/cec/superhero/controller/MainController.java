@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -66,12 +67,55 @@ public class MainController {
         List<Super> supers = dao.findAllSups();
         List<Power> powers = dao.findAllPow();
         List<Organization> organs = dao.findAllOrgs();
+        List<Location> locs = dao.findAllLocs();
+        //List<Organization> orgs = dao.findAllOrgs();
         model.addAttribute("powers", powers);
         model.addAttribute("organs", organs);
         model.addAttribute("supers",supers);
+        //model.addAttribute("orgs",orgs);
+        model.addAttribute("locs",locs);
+        model.addAttribute("selects",new int[]{0,0});
         return "heroes";
     }
-
+    
+    @PostMapping("superlocations")
+    public String superByLocal(Model model, HttpServletRequest request){
+        int locId = Integer.parseInt(request.getParameter("locSelect"));
+        Location floc = (Location)dao.findById(Models.LOCATIONS, locId);
+        if(floc == null){
+            return "redirect:/heroes";
+        }
+        List<Super> supers = dao.getSupersSeenAtLoc(floc);
+        List<Power> powers = dao.findAllPow();
+        List<Organization> organs = dao.findAllOrgs();
+        List<Location> locs = dao.findAllLocs();
+        model.addAttribute("powers", powers);
+        model.addAttribute("organs", organs);
+        model.addAttribute("supers",supers);
+        model.addAttribute("locs",locs);
+        model.addAttribute("selects",new int[]{0,locId});
+        return "heroes";
+    }
+    
+    @PostMapping("superorgs")
+    public String superByOrg(Model model, HttpServletRequest request){
+        int orgId = Integer.parseInt(request.getParameter("orgSelect"));
+        Organization org = (Organization)dao.findById(Models.ORGANIZATIONS, orgId);
+        if(org == null){
+            return "redirect:/heroes";
+        }
+        List<Super> supers = org.getSupers();
+        List<Power> powers = dao.findAllPow();
+        List<Organization> organs = dao.findAllOrgs();
+        List<Location> locs = dao.findAllLocs();
+        model.addAttribute("powers", powers);
+        model.addAttribute("organs", organs);
+        model.addAttribute("supers",supers);
+        model.addAttribute("locs",locs);
+        model.addAttribute("selects",new int[]{orgId,0});
+        return "heroes";
+    }
+    
     @GetMapping("deleteSuper")
     public String deleteSuper(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -193,10 +237,28 @@ public class MainController {
     @GetMapping("locations")
     public String locationsPage(Model model){
         List<Location> locs = dao.findAllLocs();
+        List<Super> supers = dao.findAllSups();
+        model.addAttribute("supers",supers);
         model.addAttribute("locs",locs);
+        model.addAttribute("select",0);
         return "locations";
     }
 
+    @PostMapping("localsupers")
+    public String localBySuper(Model model, HttpServletRequest request){
+        int supId = Integer.parseInt(request.getParameter("locSelect"));
+        Super sup = (Super)dao.findById(Models.SUPERS, supId);
+        if(sup == null){
+            return "redirect:/locations";
+        }
+        List<Super> supers = dao.findAllSups();
+        List<Location> locs = dao.getLocsWhereSuperSeen(sup);
+        model.addAttribute("supers",supers);
+        model.addAttribute("locs",locs);
+        model.addAttribute("selects",supId);
+        return "locations";
+    }
+    
     @GetMapping("editLocal")
     public String editLocal(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -249,10 +311,28 @@ public class MainController {
     @GetMapping("organizations")
     public String organizationsPage(Model model){
         List<Organization> orgs = dao.findAllOrgs();
+        List<Super> supers = dao.findAllSups();
+        model.addAttribute("supers",supers);
         model.addAttribute("orgs",orgs);
+        model.addAttribute("select",0);
         return "organizations";
     }
 
+    @PostMapping("organsupers")
+    public String orgBySuper(Model model, HttpServletRequest request){
+        int supId = Integer.parseInt(request.getParameter("supSelect"));
+        Super sup = (Super)dao.findById(Models.SUPERS, supId);
+        if(sup == null){
+            return "redirect:/organizations";
+        }
+        List<Super> supers = dao.findAllSups();
+        Set<Organization> orgs = sup.getOrganizations();
+        model.addAttribute("supers",supers);
+        model.addAttribute("orgs",orgs);
+        model.addAttribute("selects",supId);
+        return "organizations";
+    }
+    
     @GetMapping("editOrg")
     public String editOrg(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));
@@ -295,13 +375,34 @@ public class MainController {
         List<Sighting> sightings = dao.findAllSight();
         List<Super> supers = dao.findAllSups();
         List<Location> locs = dao.findAllLocs();
+        List<Sighting> times = dao.findAllSight();
+        model.addAttribute("times", times);
         model.addAttribute("supers", supers);
         model.addAttribute("locs", locs);
         model.addAttribute("sightings", sightings);
-        //System.out.println(sightings.get(0).getJSON());
+        model.addAttribute("select", 0);
         return "sightings";
     }
 
+    @PostMapping("sitebydate")
+    public String siteByDate(Model model, HttpServletRequest request){
+        int siteId = Integer.parseInt(request.getParameter("locSelect"));
+        Sighting fsite = (Sighting)dao.findById(Models.SIGHTINGS, siteId);
+        if(fsite == null){
+            return "redirect:/sightings";
+        }
+        List<Sighting> sightings = dao.getSightingsByDate(fsite.getDate());
+        List<Super> supers = dao.findAllSups();
+        List<Location> locs = dao.findAllLocs();
+        List<Sighting> times = dao.findAllSight();
+        model.addAttribute("times", times);
+        model.addAttribute("supers", supers);
+        model.addAttribute("locs", locs);
+        model.addAttribute("sightings", sightings);
+        model.addAttribute("select", siteId);
+        return "sightings";
+    }
+    
     @GetMapping("editSighting")
     public String editSighting(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));

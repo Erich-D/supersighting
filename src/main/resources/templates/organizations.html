@@ -28,6 +28,13 @@
         </div>
         <div class="container">
             <button id="toggleOrgForm" class="btn btn-outline-secondary" type="button">Add New Organization</button>
+            <form action="organsupers" method="POST" style="display:inline;">
+                <select name="supSelect" class="form-select" aria-label="Default select example">
+                    <option value="0" th:selected="${select==0}">Filter by Super Members</option>
+                    <option th:each="sup : ${supers}" th:value="${sup.id}" th:text="${sup.name}" th:selected="${selects==sup.id}">One</option>
+                  </select>
+                <input type="submit" value="Filter Locations" />
+            </form>
             <div id="addOrg" style="display:none;">
                 <div th:replace="fragments/super.html :: addOrgForm"></div>
             </div> 
