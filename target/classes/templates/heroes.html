@@ -8,6 +8,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link th:href="@{/css/styles.css}" rel="stylesheet">
+        <link href="./css/topnav.css" rel="stylesheet">
         <title>SuperHero Sightings</title>
     </head>
     <body>
@@ -26,7 +27,7 @@
             <div><a href="superpowers">Superpowers</a></div>
         </div>
 
-        <div class="container">
+        <div class="container" align="center">
             <button id="toggleSuperForm" class="btn btn-outline-secondary" type="button">Add Hero or Villain</button>
             <form action="superorgs" method="POST" style="display:inline;">
                 <select name="orgSelect" class="form-select" aria-label="Default select example">
