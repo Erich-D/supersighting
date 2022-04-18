@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `supersightingstest`.`Supers` (
   `name` VARCHAR(45) NOT NULL,
   `descr` VARCHAR(145) NULL,
   `hero` TINYINT NULL DEFAULT 1,
+  `photos` VARCHAR(65) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

@@ -10,8 +10,9 @@
 <link rel ="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
+    <!-- add super form -->
     <div class="container" th:fragment="addForm">
-        <form action="heroes" method="POST">
+        <form action="heroes" method="POST" enctype="multipart/form-data">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
@@ -28,6 +29,15 @@
                         id="descr" class="form-control"/>
                 </div>
             </div>
+            <!-- photo portion -->
+            <div>
+
+                <label>Photos: </label>
+                <input type="file" name="image" accept="image/png, image/jpeg" />
+
+            </div>
+            
+            <!-- end photo portion -->
             <div class="form-group flex-row d-flex">
                 <div class="p-2">
                     <input type="checkbox" name="hero" 
@@ -40,7 +50,7 @@
                         Select Powers</label>
                     <div class="col-2">
                         <select name="powers" id="powers" multiple>
-                            <option th:each="power : ${powers}" th:text="${power.name}" th:value="${power.name}"></option>
+                            <option th:each="power : ${powers}" th:text="${power.name}" th:value="${power.id}"></option>
                         </select>
                     </div>
                 </div>
@@ -49,7 +59,7 @@
                         Select Organizations</label>
                     <div class="col-2">
                         <select name="organs" id="organs" multiple>
-                            <option th:each="organ : ${organs}" th:text="${organ.name}" th:value="${organ.name}"></option>
+                            <option th:each="organ : ${organs}" th:text="${organ.name}" th:value="${organ.id}"></option>
                         </select>
                     </div>
                 </div>
@@ -57,6 +67,7 @@
             <button id="heroSubmit" type="submit" class="btn btn-primary">Add Super</button>
         </form>
     </div>
+    <!-- add power form -->
     <div class="container" th:fragment="addPowerForm">
         <form action="superpowers" method="POST">
             <div class="form-group row">
@@ -78,6 +89,7 @@
             <button id="powerSubmit" type="submit" class="btn btn-primary">Add Power</button>
         </form>
     </div>
+    <!-- add location form -->
     <div class="container" th:fragment="addLocalForm">
         <form action="locations" method="POST">
             <div class="form-group row">
@@ -108,7 +120,7 @@
                 <label for="lat" class="col-3 col-form-label">
                     Latitude</label>
                 <div class="col-9">
-                    <input type="text" name="lat" 
+                    <input type="text" name="latitude" 
                         id="lat" class="form-control"/>
                 </div>
             </div>
@@ -116,13 +128,14 @@
                 <label for="log" class="col-3 col-form-label">
                     Longitude</label>
                 <div class="col-9">
-                    <input type="text" name="log" 
+                    <input type="text" name="longitude" 
                         id="log" class="form-control"/>
                 </div>
             </div>
             <button id="localSubmit" type="submit" class="btn btn-primary">Add Location</button>
         </form>
     </div>
+    <!-- add organiztion form -->
     <div class="container" th:fragment="addOrgForm">
         <form action="organizations" method="POST">
             <div class="form-group row">
@@ -152,6 +165,7 @@
             <button id="orgSubmit" type="submit" class="btn btn-primary">Add Organization</button>
         </form>
     </div>
+    <!-- add sighting form -->
     <div class="container" th:fragment="addSightForm">
         <form action="sightings" method="POST">
             <div class="form-group row">
@@ -168,7 +182,7 @@
                         Select Super</label>
                     <div class="col-2">
                         <select name="supers" id="supers">
-                            <option th:each="super : ${supers}" th:text="${super.name}" th:value="${super.name}"></option>
+                            <option th:each="super : ${supers}" th:text="${super.name}" th:value="${super.id}"></option>
                         </select>
                     </div>
                 </div>
@@ -177,7 +191,7 @@
                         Select Location</label>
                     <div class="col-2">
                         <select name="locs" id="locs">
-                            <option th:each="loc : ${locs}" th:text="${loc.name}" th:value="${loc.name}"></option>
+                            <option th:each="loc : ${locs}" th:text="${loc.name}" th:value="${loc.id}"></option>
                         </select>
                     </div>
                 </div>

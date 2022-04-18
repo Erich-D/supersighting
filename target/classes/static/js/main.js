@@ -10,31 +10,31 @@ $(document).ready(function () {
 
 function getForms(){
     $("#toggleSuperForm").click(function(event){
-        $("#addSuper").show();
+        $("#addSuper").toggle();
     });
     $("#heroSubmit").click(function(event){
         $("#addSuper").hide();
     });
     $("#togglePowersForm").click(function(event){
-        $("#addPower").show();
+        $("#addPower").toggle();
     });
     $("#powerSubmit").click(function(event){
         $("#addPower").hide();
     });
     $("#toggleLocalForm").click(function(event){
-        $("#addLoc").show();
+        $("#addLoc").toggle();
     });
     $("#localSubmit").click(function(event){
         $("#addLoc").hide();
     });
     $("#toggleOrgForm").click(function(event){
-        $("#addOrg").show();
+        $("#addOrg").toggle();
     });
     $("#orgSubmit").click(function(event){
         $("#addOrg").hide();
     });
     $("#toggleSightForm").click(function(event){
-        $("#addSight").show();
+        $("#addSight").toggle();
     });
     $("#sightSubmit").click(function(event){
         $("#addSight").hide();
@@ -49,4 +49,32 @@ function getEdits(){
     $("#heroEditSubmit").click(function(event){
         $("#superEdit").hide();
     });
+}
+
+
+function initMap(){
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: {lat: 33.432102, lng: -111.737564},
+    zoom: 5
+    });
+  console.log(s1lat);
+  
+  $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/api/locals',
+        success: function(locArray) {
+            for(x in locArray){
+                console.log(locArray[x]);
+                var markerGrandPlace = new google.maps.Marker({
+                    position: new google.maps.LatLng(locArray[x][3], locArray[x][4]),
+                    map: map,
+                    title: locArray[x][1]
+                  });
+            }
+        },
+        error: function() {
+            alert('FAILURE!');
+        }
+    })
+ 
 }

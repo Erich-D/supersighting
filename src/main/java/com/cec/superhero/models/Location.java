@@ -5,6 +5,7 @@
  */
 package com.cec.superhero.models;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -27,14 +29,18 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
+    @NotBlank(message = "Location needs a name")
     @Column(nullable = false)
     private String name;
     @Column
     private String descr;
+    @NotBlank(message = "Location needs a description")
     @Column(nullable = false)
     private String address;
+    //@NotBlank(message = "Latitude required.")
     @Column(nullable = false)
     private float latitude;
+    //@NotBlank(message = "Longitude required")
     @Column(nullable = false)
     private float longitude;
     @OneToMany(
@@ -112,6 +118,12 @@ public class Location {
         this.sightings = sightings;
     }
     
+    public  String  getJSON()
+        {
+            Gson gson = new Gson();
+           return gson.toJson(this);
+        }
+
     
     @Override
     public String toString() {

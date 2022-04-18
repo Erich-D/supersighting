@@ -151,9 +151,17 @@ public class SuperHeroDaoDbImpl implements SuperHeroDao{
                 supers.deleteById(id);
                 break;
             case POWERS:
+                Power pow = (Power)this.findById(Models.POWERS, id);
+                for(Super sup : pow.getSupers()){
+                    sup.getPowers().remove(pow);
+                }
                 power.deleteById(id);
                 break;
             case ORGANIZATIONS:
+                Organization org = (Organization)this.findById(Models.ORGANIZATIONS, id);
+                for(Super sup : org.getSupers()){
+                    sup.getOrganizations().remove(org);
+                }
                 organ.deleteById(id);
                 break;
             case SIGHTINGS:
