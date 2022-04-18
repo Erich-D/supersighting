@@ -45,7 +45,7 @@
             </form>
         </div>
         -->
-        <div class="container">
+        <div class="container" align="center">
             <button id="toggleSuperForm" class="btn btn-outline-secondary" type="button">Add Hero or Villain</button>
             <div id="addSuper" style="display:none;">
                 <div th:replace="fragments/super.html :: addForm"></div>
@@ -74,7 +74,6 @@
                                 th:with="list=${super.powers}">Superhero Power</td>
                             <td th:insert="fragments/general.html :: valueList"
                                 th:with="list=${super.organizations}">Organizations</td>
-
                             <td><a id="editSuper" href="#" th:href="@{/editSuper(id=${super.id})}">Edit</a></td>
                             <td><a href="#" th:href="@{/deleteSuper(id=${super.id})}">Delete</a></td>
                         </tr>

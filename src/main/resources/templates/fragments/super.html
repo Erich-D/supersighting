@@ -11,7 +11,7 @@
 </head>
 <body>
     <!-- add super form -->
-    <div class="container" th:fragment="addForm">
+    <div class="container" th:fragment="addForm" style="padding: 20px;">
         <form action="heroes" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
@@ -30,25 +30,25 @@
                 </div>
             </div>
             <div class="form-group flex-row d-flex">
-                <div class="p-2">
+                <div class="p-2" style="margin: 20px;">
                     <input type="checkbox" name="hero" 
-                             id="hero" value="true"/>
+                            id="hero" value="true"/>
                     <label for="hero" class="col-form-label">
                         Is Hero?</label>
                 </div>
-                <div class="p-2">
+                <div style="margin: 50px;">
                     <label for="powers" class="col-form-label">
                         Select Powers</label>
-                    <div class="col-2">
+                    <div>
                         <select name="powers" id="powers" multiple>
                             <option th:each="power : ${powers}" th:text="${power.name}" th:value="${power.id}"></option>
                         </select>
                     </div>
                 </div>
-                <div class="p-2">
+                <div style="margin: 50px;">
                     <label for="organs" class="col-form-label">
                         Select Organizations</label>
-                    <div class="col-2">
+                    <div>
                         <select name="organs" id="organs" multiple>
                             <option th:each="organ : ${organs}" th:text="${organ.name}" th:value="${organ.id}"></option>
                         </select>
@@ -59,7 +59,7 @@
         </form>
     </div>
     <!-- add power form -->
-    <div class="container" th:fragment="addPowerForm">
+    <div class="container" th:fragment="addPowerForm" style="padding: 20px;">
         <form action="superpowers" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
@@ -81,7 +81,7 @@
         </form>
     </div>
     <!-- add location form -->
-    <div class="container" th:fragment="addLocalForm">
+    <div class="container" th:fragment="addLocalForm" style="padding: 20px;">
         <form action="locations" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
@@ -127,7 +127,7 @@
         </form>
     </div>
     <!-- add organiztion form -->
-    <div class="container" th:fragment="addOrgForm">
+    <div class="container" th:fragment="addOrgForm" style="padding: 20px;">
         <form action="organizations" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
@@ -157,7 +157,7 @@
         </form>
     </div>
     <!-- add sighting form -->
-    <div class="container" th:fragment="addSightForm">
+    <div class="container" th:fragment="addSightForm" style="padding: 20px;">
         <form action="sightings" method="POST">
             <div class="form-group row">
                 <label for="date" class="col-3 col-form-label">
@@ -168,10 +168,10 @@
                 </div>
             </div>
             <div class="form-group flex-row d-flex">
-                <div class="p-2">
+                <div class="p-2" style="margin-left: 100px;">
                     <label for="supers" class="col-form-label">
                         Select Super</label>
-                    <div class="col-2">
+                    <div>
                         <select name="supers" id="supers">
                             <option th:each="super : ${supers}" th:text="${super.name}" th:value="${super.id}"></option>
                         </select>
@@ -180,7 +180,7 @@
                 <div class="p-2">
                     <label for="locs" class="col-form-label">
                         Select Location</label>
-                    <div class="col-2">
+                    <div>
                         <select name="locs" id="locs">
                             <option th:each="loc : ${locs}" th:text="${loc.name}" th:value="${loc.id}"></option>
                         </select>

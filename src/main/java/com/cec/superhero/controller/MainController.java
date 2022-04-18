@@ -177,7 +177,7 @@ public class MainController {
     }
 
     @PostMapping("superpowers")
-     public String powersForm(Power pow, HttpServletRequest request) {
+    public String powersForm(Power pow, HttpServletRequest request) {
         
         dao.saveOrUpdate(Models.POWERS, pow);
         
@@ -185,7 +185,7 @@ public class MainController {
     }
 
     //-----------Locations of sightings pages------------------ 
-     
+
     @GetMapping("locations")
     public String locationsPage(Model model){
         List<Location> locs = dao.findAllLocs();
@@ -277,13 +277,13 @@ public class MainController {
     }
 
     @PostMapping("organizations")
-     public String organizationsForm(Organization organ, HttpServletRequest request) {
+    public String organizationsForm(Organization organ, HttpServletRequest request) {
         
         dao.saveOrUpdate(Models.ORGANIZATIONS, organ);
 
         return "redirect:/organizations";
     }
-     
+    
     //--------------Super Sightings Pages--------------------------- 
 
     @GetMapping("sightings")
