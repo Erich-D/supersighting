@@ -10,15 +10,15 @@
 <link rel ="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
-    <!-- add super form -->
-    <div class="container" th:fragment="addForm">
-        <form action="heroes" method="POST">
+    <div class="container" th:fragment="editSuperForm">
+        <form action="editSuper" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
                 <div class="col-9">
                     <input type="text" name="name" 
-                        id="name" class="form-control"/>
+                        id="name" class="form-control"
+                        th:value="${super.name}"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -26,47 +26,56 @@
                     Description</label>
                 <div class="col-9">
                     <input type="text" name="descr" 
-                        id="descr" class="form-control"/>
+                        id="descr" class="form-control"
+                        th:value="${super.descr}"/>
                 </div>
             </div>
             <div class="form-group flex-row d-flex">
                 <div class="p-2">
-                    <input type="checkbox" name="hero" 
-                             id="hero" value="true"/>
+                    <input type="radio" name="hero" 
+                             id="hero" value="hero" th:checked="${super.hero} ? 'checked'"/>
                     <label for="hero" class="col-form-label">
                         Is Hero?</label>
+                    <input type="radio" name="hero" 
+                             id="villain" value="villain" th:checked="!${super.hero} ? 'checked'"/>
+                    <label for="villain" class="col-form-label">
+                        Is Villain?</label>
                 </div>
                 <div class="p-2">
-                    <label for="powers" class="col-form-label">
-                        Select Powers</label>
-                    <div class="col-2">
-                        <select name="powers" id="powers" multiple>
-                            <option th:each="power : ${powers}" th:text="${power.name}" th:value="${power.id}"></option>
-                        </select>
+                    <div>
+                        <label>Select Powers</label>
+                        <div th:each="power : ${pows}">
+                            <input type="checkbox" th:name="${power.name}" 
+                                id="power" th:value="${power.name}" th:checked="${super.powers.contains(power)} ? 'checked'"/>
+                            <label for="power" class="col-form-label" th:text="${power.name}">
+                                Select Powers</label>
+                        </div>
                     </div>
                 </div>
                 <div class="p-2">
-                    <label for="organs" class="col-form-label">
-                        Select Organizations</label>
-                    <div class="col-2">
-                        <select name="organs" id="organs" multiple>
-                            <option th:each="organ : ${organs}" th:text="${organ.name}" th:value="${organ.id}"></option>
-                        </select>
-                    </div>
+                    <label>Select Organizations</label>
+                        <div th:each="org : ${orgs}">
+                            <input type="checkbox" th:name="${org.name}" 
+                                id="org" th:value="${org.name}" th:checked="${super.organizations.contains(org)} ? 'checked'"/>
+                            <label for="org" class="col-form-label" th:text="${org.name}">
+                                Select Powers</label>
+                        </div>
                 </div>
             </div>
-            <button id="heroSubmit" type="submit" class="btn btn-primary">Add Super</button>
+            <input type="hidden" name="id" th:value="${super.id}"/>
+            <button id="heroEditSubmit" type="submit" class="btn btn-primary">Update Super</button>
         </form>
     </div>
-    <!-- add power form -->
-    <div class="container" th:fragment="addPowerForm">
-        <form action="superpowers" method="POST">
+    <!-- edit powers -->
+    <div class="container" th:fragment="editPowerForm">
+        <form action="editPower" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
                 <div class="col-9">
                     <input type="text" name="name" 
-                        id="name" class="form-control"/>
+                        id="name" class="form-control"
+                        th:value="${power.name}"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -74,21 +83,24 @@
                     Description</label>
                 <div class="col-9">
                     <input type="text" name="descr" 
-                        id="descr" class="form-control"/>
+                        id="descr" class="form-control"
+                        th:value="${power.descr}"/>
                 </div>
             </div>
-            <button id="powerSubmit" type="submit" class="btn btn-primary">Add Power</button>
+            <input type="hidden" name="id" th:value="${power.id}"/>
+            <button id="powerSubmit" type="submit" class="btn btn-primary">Edit Power</button>
         </form>
     </div>
-    <!-- add location form -->
-    <div class="container" th:fragment="addLocalForm">
-        <form action="locations" method="POST">
+    <!-- edit location -->
+    <div class="container" th:fragment="editLocalForm">
+        <form action="editLocal" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
                 <div class="col-9">
                     <input type="text" name="name" 
-                        id="name" class="form-control"/>
+                        id="name" class="form-control"
+                        th:value="${loc.name}"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -96,7 +108,8 @@
                     Description</label>
                 <div class="col-9">
                     <input type="text" name="descr" 
-                        id="descr" class="form-control"/>
+                        id="descr" class="form-control"
+                        th:value="${loc.descr}"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -104,37 +117,42 @@
                     Address</label>
                 <div class="col-9">
                     <input type="text" name="address" 
-                        id="address" class="form-control"/>
+                        id="address" class="form-control"
+                        th:value="${loc.address}"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="lat" class="col-3 col-form-label">
                     Latitude</label>
                 <div class="col-9">
-                    <input type="text" name="latitude" 
-                        id="lat" class="form-control"/>
+                    <input type="text" name="lat" 
+                        id="lat" class="form-control"
+                        th:value="${loc.latitude}"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="log" class="col-3 col-form-label">
                     Longitude</label>
                 <div class="col-9">
-                    <input type="text" name="longitude" 
-                        id="log" class="form-control"/>
+                    <input type="text" name="log" 
+                        id="log" class="form-control"
+                        th:value="${loc.longitude}"/>
                 </div>
             </div>
-            <button id="localSubmit" type="submit" class="btn btn-primary">Add Location</button>
+            <input type="hidden" name="id" th:value="${loc.id}"/>
+            <button id="localSubmit" type="submit" class="btn btn-primary">Edit Location</button>
         </form>
     </div>
-    <!-- add organiztion form -->
-    <div class="container" th:fragment="addOrgForm">
-        <form action="organizations" method="POST">
+    <!-- edit organizations -->
+    <div class="container" th:fragment="editOrgForm">
+        <form action="editOrg" method="POST">
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
                 <div class="col-9">
                     <input type="text" name="name" 
-                        id="name" class="form-control"/>
+                        id="name" class="form-control"
+                        th:value="${org.name}"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -142,7 +160,8 @@
                     Description</label>
                 <div class="col-9">
                     <input type="text" name="descr" 
-                        id="descr" class="form-control"/>
+                        id="descr" class="form-control"
+                        th:value="${org.descr}"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -150,44 +169,52 @@
                     Address</label>
                 <div class="col-9">
                     <input type="text" name="address" 
-                        id="address" class="form-control"/>
+                        id="address" class="form-control"
+                        th:value="${org.address}"/>
                 </div>
             </div>
-            <button id="orgSubmit" type="submit" class="btn btn-primary">Add Organization</button>
+            <input type="hidden" name="id" th:value="${org.id}"/>
+            <button id="orgSubmit" type="submit" class="btn btn-primary">Edit Organization</button>
         </form>
     </div>
-    <!-- add sighting form -->
-    <div class="container" th:fragment="addSightForm">
-        <form action="sightings" method="POST">
+    <!-- edit sightings -->
+    <div class="container" th:fragment="editSightForm">
+        <form action="editSighting" method="POST">
             <div class="form-group row">
                 <label for="date" class="col-3 col-form-label">
                     Date</label>
                 <div class="col-9">
                     <input type="datetime-local" name="date" 
-                        id="date" class="form-control"/>
+                        id="date" class="form-control"
+                        th:value="${sg.date}"/>
                 </div>
             </div>
             <div class="form-group flex-row d-flex">
                 <div class="p-2">
-                    <label for="supers" class="col-form-label">
-                        Select Super</label>
-                    <div class="col-2">
-                        <select name="supers" id="supers">
-                            <option th:each="super : ${supers}" th:text="${super.name}" th:value="${super.id}"></option>
-                        </select>
+                    <div>
+                        <label>Select Super</label>
+                        <div th:each="sup : ${sups}">
+                            <input type="radio" name="seenSuper" 
+                                id="sup" th:value="${sup.id}" th:checked="${sup.equals(sg.superp)} ? 'checked'"/>
+                            <label for="sup" class="col-form-label" th:text="${sup.name}">
+                                Select Super</label>
+                        </div>
                     </div>
                 </div>
                 <div class="p-2">
-                    <label for="locs" class="col-form-label">
-                        Select Location</label>
-                    <div class="col-2">
-                        <select name="locs" id="locs">
-                            <option th:each="loc : ${locs}" th:text="${loc.name}" th:value="${loc.id}"></option>
-                        </select>
+                    <div>
+                        <label>Select Location</label>
+                        <div th:each="loc : ${locs}">
+                            <input type="radio" name="local" 
+                                id="loc" th:value="${loc.id}" th:checked="${loc.equals(sg.location)} ? 'checked'"/>
+                            <label for="loc" class="col-form-label" th:text="${loc.name}">
+                                Select Location</label>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button id="sightSubmit" type="submit" class="btn btn-primary">Add Sighting</button>
+            <input type="hidden" name="id" th:value="${sg.id}"/>
+            <button id="sightSubmit" type="submit" class="btn btn-primary">Edit Sighting</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
