@@ -6,6 +6,8 @@
 $(document).ready(function () {
     getForms();
     getEdits();
+    getSuperTable();
+    $(".hide").click(function(){$(".singles").hide();});
 });
 
 function getForms(){
@@ -77,4 +79,12 @@ function initMap(){
         }
     })
  
+}
+
+function getSuperTable(){
+    $(".displaySuper").click(function(e){
+        let id = $(this).attr("data-id");
+        $(".singles").hide();
+        $("#"+id).toggle();
+    });
 }
