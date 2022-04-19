@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container" th:fragment="editSuperForm">
-        <form action="editSuper" method="POST">
+        <form action="editSuper" method="POST" enctype="multipart/form-data" >
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">
                     Name</label>
@@ -30,6 +30,16 @@
                         th:value="${super.descr}"/>
                 </div>
             </div>
+            <!-- photo portion -->
+            <img th:src="@{${super.photos}}" alt="No image exists" width="100">
+            <div>
+
+                <label>Photos: </label>
+                <input type="file" name="image" accept="image/png, image/jpeg" />
+
+            </div>
+            
+            <!-- end photo portion -->
             <div class="form-group flex-row d-flex">
                 <div class="p-2">
                     <input type="radio" name="hero" 

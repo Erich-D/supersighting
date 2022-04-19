@@ -43,6 +43,9 @@
                   </select>
                 <input type="submit" value="Filter Location" />
             </form>
+            <div th:each="super : ${supers}" th:id="${super.id}" class="singles" style="display:none;">
+                <div th:replace="fragments/super.html :: displaySuper"></div>
+            </div>
             <div id="addSuper" style="display:none;">
                 <div th:replace="fragments/super.html :: addForm"></div>
             </div>
@@ -57,12 +60,13 @@
                             <th>Description</th>
                             <th>Superpowers</th>
                             <th>Organizations</th>
+                            <th>Display Details</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="super : ${supers}">
+                        <tr th:each="super : ${supers}" th:onclick="@{/displaySuper(id=${super.id})}">
                             <td th:text="${super.id}">Superhero ID</td>
                             <td th:text="${super.name}">Superhero Name</td>
                             <td th:text="${super.descr}">Superhero Description</td>
@@ -70,6 +74,7 @@
                                 th:with="list=${super.powers}">Superhero Power</td>
                             <td th:insert="fragments/general.html :: valueList"
                                 th:with="list=${super.organizations}">Organizations</td>
+                            <td><a class="displaySuper" href="#" th:attr="data-id=${super.id}">Display</a></td>
                             <td><a id="editSuper" href="#" th:href="@{/editSuper(id=${super.id})}">Edit</a></td>
                             <td><a href="#" th:href="@{/deleteSuper(id=${super.id})}">Delete</a></td>
                         </tr>

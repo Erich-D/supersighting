@@ -5,6 +5,7 @@ com\cec\superhero\models\Sighting.class
 com\cec\superhero\dao\SuperHeroDaoDbImpl$Models.class
 com\cec\superhero\controller\MainController.class
 com\cec\superhero\models\Power.class
+com\cec\superhero\controller\FileUploadUtil.class
 com\cec\superhero\models\Super.class
 com\cec\superhero\models\Organization.class
 com\cec\superhero\dao\SuperHeroDaoDbImpl.class

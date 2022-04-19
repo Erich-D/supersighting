@@ -14,6 +14,7 @@ import com.cec.superhero.models.Location;
 import com.cec.superhero.models.Organization;
 import com.cec.superhero.models.Power;
 import com.cec.superhero.models.Sighting;
+import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -137,7 +139,8 @@ public class MainController {
     }
 
     @PostMapping("editSuper")
-    public String updateSuper(HttpServletRequest request){
+    public String updateSuper(HttpServletRequest request,
+                @RequestParam("image") MultipartFile multipartFile){
         int id = Integer.parseInt(request.getParameter("id"));
         Super sp = (Super)dao.findById(Models.SUPERS, id);
         List<Power> pows = dao.findAllPow();
@@ -158,23 +161,42 @@ public class MainController {
                 sp.getOrganizations().add(org);
             }
         }
+        String fileName;
+        if(multipartFile.isEmpty()){
+            fileName = "";
+        }else{
+            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            fileName = sp.getId()+sp.getName().replaceAll("[ ]", "") + fileName.substring(fileName.lastIndexOf("."));
+        }
+        if(!fileName.isBlank()){
+            sp.setPhotos("/img/"+fileName);
+        }
+        if(!multipartFile.isEmpty() && !fileName.isBlank()){
+            try{
+                FileUploadUtil.saveFile("src/main/resources/static/img", fileName, multipartFile);
+            }catch(IOException e){
+                System.out.println(e);
+            }
+        }
         dao.saveOrUpdate(Models.SUPERS, sp);
         return "redirect:/heroes";
     }
 
     @PostMapping("heroes")
      public String supersForm(HttpServletRequest request,
-             @RequestParam("image") MultipartFile multipartFile) {
+             @RequestParam("image") MultipartFile multipartFile)throws IOException  {
         String name = request.getParameter("name");
         String descr = request.getParameter("descr");
         boolean hero = (request.getParameter("hero")=="true") ? true:false;
         String[] powers = request.getParameterValues("powers");
         String[] organs = request.getParameterValues("organs");
+
         //create hero
         Super newSup = new Super();
         newSup.setName(name);
         newSup.setDescr(descr);
         newSup.setHero(hero);
+
         for(String id : powers){
             newSup.getPowers().add((Power)dao.findById(Models.POWERS,
                     Integer.parseInt(id)));
@@ -183,8 +205,26 @@ public class MainController {
             newSup.getOrganizations().add((Organization)dao.findById(Models.ORGANIZATIONS,
                     Integer.parseInt(id)));
         }
-        System.out.println(multipartFile.getContentType());
+
         newSup = (Super)dao.saveOrUpdate(Models.SUPERS, newSup);
+        String fileName;
+        if(multipartFile.isEmpty()){
+            fileName = "";
+        }else{
+            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            fileName = newSup.getId()+name.replaceAll("[ ]", "") + fileName.substring(fileName.lastIndexOf("."));
+        }
+        if(!fileName.isBlank()){
+            newSup.setPhotos("/img/"+fileName);
+        }
+        if(!multipartFile.isEmpty() && !fileName.isBlank()){
+            try{
+                FileUploadUtil.saveFile("src/main/resources/static/img", fileName, multipartFile);
+            }catch(IOException e){
+                System.out.println(e);
+            }
+        }
+        dao.saveOrUpdate(Models.SUPERS, newSup);
         return "redirect:/heroes";
     }
 
